@@ -1,0 +1,12 @@
+{
+  "name": "daily-agenda",
+  "version": "0.0.1",
+  "description": "AngularJS project for Daily Agenda app",
+  "readme": "README.md",  
+  "devDependencies": {
+    "bower": "^1.3.1"
+  },  
+  "scripts": {
+    "postinstall": "bower install"
+  }
+}
