@@ -238,4 +238,17 @@ public class TaskDAO {
 	}
 	
     }
+
+    public static void deleteTask(int taskId) {
+	String deleteQuery = "DELETE FROM public.\"Task\" WHERE \"ID\" = ?";
+	try {
+	    Connection connection = getConnection();
+	    PreparedStatement prepStatement = connection
+		    .prepareStatement(deleteQuery);
+	    prepStatement.setInt(1,taskId);
+	    prepStatement.executeUpdate();
+	}catch(SQLException e){
+	    e.printStackTrace();
+	}
+    }
 }
