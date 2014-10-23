@@ -1,11 +1,20 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="dailyAgendaApp">
 <head>
   <meta charset="utf-8">
   <title>Daily Agenda</title>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  
+  <script src="js/controllers.js"></script>
 </head>
-<body>
-<p>Nothing here {{'yet' + '!'}}</p>
+<body ng-controller="TaskListController">
+<h1>List of tasks</h1>
+<ul>
+	<li ng-repeat="task in tasks">
+		<p>{{task.description}}</p>
+	</li>
+</ul>
+
 </body>
 </html>
