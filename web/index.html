@@ -3,18 +3,24 @@
 <head>
   <meta charset="utf-8">
   <title>Daily Agenda</title>
+  
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
   
   <script src="js/controllers.js"></script>
 </head>
 <body ng-controller="TaskListController">
-<h1>List of tasks</h1>
-<ul>
-	<li ng-repeat="task in tasks">
-		<p>{{task.description}}</p>
-	</li>
-</ul>
+<h1>Current Tasks</h1>
+
+<div class="container-fluid">
+
+	<div class="row" ng-repeat="task in tasks">
+	  <div class="col-lg-8" ><p>{{task.description}}</p></div>
+	</div>
+
+</div>
 
 </body>
 </html>
