@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Daily Agenda</title>
   
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
   
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -12,14 +12,36 @@
   <script src="js/controllers.js"></script>
 </head>
 <body ng-controller="TaskListController">
-<h1>Current Tasks</h1>
+<h2>Current Tasks</h2>
+<div class="container-custom">
 
-<div class="container-fluid">
+    <div ng-repeat="category in categories">
+    	<div class="row" >
+		  <div class="col-lg-2" ><p>{{category.name}}</p></div>
+		</div>
+		
+		<div class="bordered-task" ng-repeat="task in category.taskList">
+		
+			<div class="row" >
+			  <div class="col-lg-2" ><p>{{task.priority}}</p></div>
+			  <div class="col-lg-4" ><p>{{task.description}}</p></div>
+			  <div class="col-lg-4" ><p>{{task.statusComment}}</p></div>
+			  <div class="col-lg-2" ><p>{{task.completionGrade - 1}}%</p></div>
+			</div>
+			
+			<div ng-if="task.subtaskNum" >
+				<div class="row bordered-subtask" ng-repeat="subtask in task.subtasks">
+					<div class="col-lg-2" ><p>{{subtask.priority}}</p></div>
+				  	<div class="col-lg-4" ><p>{{subtask.description}}</p></div>
+				  	<div class="col-lg-4" ><p>{{subtask.statusComment}}</p></div>
+				  	<div class="col-lg-2" ><p>{{subtask.completionGrade - 1}}%</p></div>
+				</div>
+			</div>
+		
+		</div>
 
-	<div class="row" ng-repeat="task in tasks">
-	  <div class="col-lg-8" ><p>{{task.description}}</p></div>
 	</div>
-
+	
 </div>
 
 </body>

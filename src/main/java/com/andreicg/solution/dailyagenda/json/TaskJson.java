@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class TaskJson {
 
     private int id;
+    private int categoryId;
     private int userId;
     private String description;
     private int priority;
@@ -15,6 +16,7 @@ public class TaskJson {
     private int completionGrade;
     private String statusComment;
 
+    private int subtaskNum;
     private List<TaskJson> subtasks = new ArrayList<TaskJson>();
 
     public int getId() {
@@ -23,6 +25,14 @@ public class TaskJson {
 
     public void setId(int id) {
 	this.id = id;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getDescription() {
@@ -72,6 +82,15 @@ public class TaskJson {
 
     public void setStatusComment(String statusComment) {
         this.statusComment = statusComment;
+    }
+    
+    
+    public int getSubtaskNum() {
+        return subtaskNum;
+    }
+
+    public void setSubtaskNum(int subtaskNum) {
+        this.subtaskNum = subtaskNum;
     }
 
     /**

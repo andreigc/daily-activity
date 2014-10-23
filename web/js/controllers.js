@@ -6,5 +6,5 @@ dailyAgendaApp.config(function ($httpProvider) {
 
 dailyAgendaApp.controller('TaskListController',['$scope','$http','$cookies',function($scope,$http,$cookies){
 	$cookies.sessionId=1;
-	$http.get("rest/tasks/getMultiple?userId=1").success(function(data){ $scope.tasks = data;});
+	$http.get("rest/tasks/get/multiple?userId=1").success(function(data){ $scope.categories = data;});
 }]);

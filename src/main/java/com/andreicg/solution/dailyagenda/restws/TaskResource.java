@@ -13,7 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.andreicg.solution.dailyagenda.json.CategoryJson;
 import com.andreicg.solution.dailyagenda.json.TaskJson;
+import com.andreicg.solution.dailyagenda.model.Category;
+import com.andreicg.solution.dailyagenda.model.CategoryDAO;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
@@ -31,6 +34,7 @@ public class TaskResource {
 	taskJson.setTaskType(task.getTaskType());
 	taskJson.setCompletionGrade(task.getCompletionGrade());
 	taskJson.setStatusComment(task.getStatusComment());
+	taskJson.setCategoryId(task.getCategoryId());
 	return taskJson;
     }
 
@@ -42,16 +46,43 @@ public class TaskResource {
 	    if (type == TaskType.STANDALONE) {
 		tasksJson.add(taskJson);
 	    } else if (type == TaskType.CONTAINER) {
+		int subtaskNo = 0;
 		for (Task subTask : tasks) {
 		    if (subTask.getParentId() == task.getId()) {
+			subtaskNo++;
 			TaskJson subTaskJson = taskToTaskJson(subTask);
 			taskJson.getSubtasks().add(subTaskJson);
 		    }
 		}
+		taskJson.setSubtaskNum(subtaskNo);
 		tasksJson.add(taskJson);
 	    }
 	}
 	return tasksJson;
+    }
+    
+
+    private List<CategoryJson> categorizeTaskJsonList(List<TaskJson> tasks,List<Category> categories){
+	List<CategoryJson> list = new ArrayList<CategoryJson>();
+	
+	for(Category cat: categories){
+	    CategoryJson catJson = new CategoryJson();
+	    catJson.setDescription(cat.getDescription());
+	    catJson.setName(cat.getCategoryName());
+	    catJson.setId(cat.getId());
+	    list.add(catJson);
+	}
+	
+	for(TaskJson task:tasks){
+	    for(CategoryJson cat: list){
+		if(cat.getId()==task.getCategoryId()){
+		    cat.getTaskList().add(task);
+		    cat.incrementTaskNum();
+		    break;
+		}
+	    }
+	}
+	return list;
     }
 
     private Task taskJsonToTask(TaskJson taskJson) {
@@ -63,21 +94,30 @@ public class TaskResource {
 	task.setTaskType(taskJson.getTaskType());
 	task.setCompletionGrade(taskJson.getCompletionGrade());
 	task.setStatusComment(taskJson.getStatusComment());
+	task.setCategoryId(taskJson.getCategoryId());
 	return task;
     }
 
-    @Path("/getMultiple")
+    @Path("/get/multiple")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TaskJson> getTasks(@QueryParam("userId") int userId,
+    public List<CategoryJson> getTasks(@QueryParam("userId") int userId,
 	    @QueryParam("categoryId") int categoryId,
 	    @QueryParam("completionType") int completionType) {
 	List<Task> tasks = TaskDAO.getAllTasksForUser(userId, categoryId,
 		CompletionType.getCompletionTypeById(completionType));
-	return taskListToTaskJsonList(tasks);
+	List<Category> categories = null;
+	if(categoryId!=0){
+	    categories = new ArrayList<Category>();
+	    CategoryDAO.getCategory(categoryId);
+	}else{
+	    categories = CategoryDAO.getAllCategories();
+	}
+	List<TaskJson> nestedTasks =  taskListToTaskJsonList(tasks);
+	return categorizeTaskJsonList(nestedTasks,categories);
     }
     
-    @Path("/get")
+    @Path("/get/single")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public TaskJson getTask(@QueryParam("taskId") int taskId){
