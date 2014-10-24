@@ -1,0 +1,93 @@
+<div class="container-custom">
+
+	<div class="my-category" ng-repeat="category in categories"
+		ng-hover-category id="{{category.id}}">
+		<div class="row">
+			<div class="col-lg-2">
+				<p>{{category.name}}</p>
+			</div>
+		</div>
+
+		<div class="bordered-task"
+			ng-repeat="task in category.taskList | orderBy:orderProp"
+			ng-hover-task id="{{task.id}}" type="{{task.taskType}}">
+
+			<div class="row">
+				<div class="col-lg-2">
+					<span class="label label-{{task.priority | priority}}">{{task.priority
+						| priority}}</span>
+				</div>
+				<div class="col-lg-4">
+					<a href="#/tasks/{{task.id}}">{{task.description}}</a>
+				</div>
+				<div class="col-lg-4">
+					<p>{{task.statusComment}}</p>
+				</div>
+				<div class="col-lg-2">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" role="progressbar"
+							aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+							style="width: {{task.completionGrade -1}}px">
+							<span class="sr-only">{{task.completionGrade - 1}}%
+								Complete</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div ng-if="task.subtaskNum">
+				<div class="row bordered-subtask"
+					ng-repeat="subtask in task.subtasks | orderBy:orderProp">
+					<div class="col-lg-2">
+						<span class="label label-{{subtask.priority | priority}}">{{subtask.priority
+							| priority}}</span>
+					</div>
+					<div class="col-lg-4">
+						<a href="#/tasks/{{subtask.id}}">{{subtask.description}}</a>
+					</div>
+					<div class="col-lg-4">
+						<p>{{subtask.statusComment}}</p>
+					</div>
+					<div class="col-lg-2">
+						<div class="progress">
+							<div class="progress-bar progress-bar-success" role="progressbar"
+								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+								style="width: {{subtask.completionGrade- 1}}px">
+								<span class="sr-only">{{subtask.completionGrade - 1}}%
+									Complete</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
+				<div class="col-lg-2">
+					<span class="glyphicon glyphicon-plus"></span>
+				</div>
+				<div class="col-lg-4">
+					<p>
+						<em>Add a new sub-task</em>
+					</p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row bordered-task new-task-{{category.id}} hidden" ng-click="go('/tasks/create')">
+			<div class="col-lg-2">
+				<span class="glyphicon glyphicon-plus"></span>
+			</div>
+			<div class="col-lg-4">
+				<p>
+					<em>Add a new task</em>
+				</p>
+			</div>
+		</div>
+
+
+	</div>
+
+</div>

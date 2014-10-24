@@ -1,69 +1,11 @@
-var dailyAgendaApp = angular.module('dailyAgendaApp', [ 'ngCookies' ]);
+var dailyAppcontrollers = angular.module('dailyAppControllers', []);
 
-dailyAgendaApp.config(function($httpProvider) {
-	$httpProvider.defaults.withCredentials = true;
-});
-
-dailyAgendaApp.filter('priority', function() {
-	return function(input) {
-		switch (input) {
-		case 1:
-			return 'low'
-		case 2:
-			return 'important'
-		case 3:
-			return 'urgent'
-		default:
-			return 'urgent'
-		}
-		
-	};
-});
-
-dailyAgendaApp.directive('ngHoverTask', function() {
-	return {
-		link : function(scope, element, attributes) {
-			var id = attributes.id;
-			var type = attributes.type;
-			element.bind('mouseenter', function() {
-				if (type == 2) {
-					angular.element(
-							document.querySelector('.new-subtask-' + id))
-							.removeClass('hidden');
-				}
-			})
-			element.bind('mouseleave', function() {
-				if (type == 2) {
-					angular.element(
-							document.querySelector('.new-subtask-' + id))
-							.addClass('hidden');
-				}
-			})
-		}
-	}
-});
-
-dailyAgendaApp.directive('ngHoverCategory', function() {
-	return {
-		link : function(scope, element, attributes) {
-			var id = attributes.id;
-			element.bind('mouseenter', function() {
-				angular.element(document.querySelector('.new-task-' + id))
-						.removeClass('hidden');
-			})
-			element.bind('mouseleave', function() {
-				angular.element(document.querySelector('.new-task-' + id))
-						.addClass('hidden');
-			})
-		}
-	}
-});
-
-dailyAgendaApp.controller('TaskListController', [
+dailyAppcontrollers.controller('TaskListController', [
 		'$scope',
 		'$http',
 		'$cookies',
-		function($scope, $http, $cookies) {
+		'$location',
+		function($scope, $http, $cookies,$location) {
 			$cookies.sessionId = 1;
 			$http.get("rest/tasks/get/multiple?userId=1").success(
 					function(data) {
@@ -72,4 +14,13 @@ dailyAgendaApp.controller('TaskListController', [
 
 			$scope.orderProp = '-priority';
 
+			$scope.go = function (path) {
+				  $location.path(path);
+				};
+			
+		} ]);
+
+dailyAppcontrollers.controller('TaskNewController', [ '$scope', '$http',
+		'$cookies', function($scope, $http, $cookies) {
+			$cookies.sessionId = 1;
 		} ]);

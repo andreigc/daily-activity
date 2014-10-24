@@ -1,5 +1,6 @@
 *.class
 
+npm-debug.log
 
 # Package Files #
 *.jar
