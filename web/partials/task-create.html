@@ -1,1 +1,15 @@
-Page for creating new task
+<div>
+	<form name="newTaskForm">
+		Category <select ng-model="category" ng-change="update()" ng-options="category.name for category in categories">
+		</select>
+		<br/>
+		<br/>
+		Task Description: <input type="text" name="taskDescription"  ng-model="task.description" required>
+		   <span class="error" ng-show="newTaskForm.taskDescription.$error.required">
+			   Required!
+		   </span>
+		 
+	</form>
+	<hr>
+	<tt>task = {{task}}</tt>
+</div>

@@ -63,7 +63,7 @@
 				</div>
 			</div>
 
-			<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
+			<div class="row bordered-subtask new-subtask-{{task.id}} hidden" ng-click="go('/tasks/create/parent/1')">
 				<div class="col-lg-2">
 					<span class="glyphicon glyphicon-plus"></span>
 				</div>
@@ -76,7 +76,7 @@
 
 		</div>
 
-		<div class="row bordered-task new-task-{{category.id}} hidden" ng-click="go('/tasks/create')">
+		<div class="row bordered-task new-task-{{category.id}} hidden" ng-click=" go('/tasks/create')">
 			<div class="col-lg-2">
 				<span class="glyphicon glyphicon-plus"></span>
 			</div>

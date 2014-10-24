@@ -5,11 +5,16 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.andreicg.solution.dailyagenda.model.Category;
+import com.andreicg.solution.dailyagenda.model.Task;
+import com.andreigc.solution.dailyagenda.enums.TaskType;
+
 public class TaskJson {
 
     private int id;
     private int categoryId;
     private int userId;
+    private int parentId;
     private String description;
     private int priority;
     private int taskType;
@@ -84,7 +89,6 @@ public class TaskJson {
         this.statusComment = statusComment;
     }
     
-    
     public int getSubtaskNum() {
         return subtaskNum;
     }
@@ -93,12 +97,74 @@ public class TaskJson {
         this.subtaskNum = subtaskNum;
     }
 
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
     /**
      * 
      * @return A pre-allocated TaskJson list
      */
     public List<TaskJson> getSubtasks() {
 	return subtasks;
+    }
+    
+    
+    public static Task taskJsonToTask(TaskJson taskJson) {
+   	Task task = new Task();
+   	task.setId(taskJson.getId());
+   	task.setDescription(taskJson.getDescription());
+   	task.setPriority(taskJson.getPriority());
+   	task.setUserId(taskJson.getUserId());
+   	task.setTaskType(taskJson.getTaskType());
+   	task.setCompletionGrade(taskJson.getCompletionGrade());
+   	task.setStatusComment(taskJson.getStatusComment());
+   	task.setCategoryId(taskJson.getCategoryId());
+   	task.setParentId(taskJson.getParentId());
+   	return task;
+    }
+    
+    public static List<TaskJson> hierarchizeTaskJsonList(List<TaskJson> tasks){
+	List<TaskJson> result = new ArrayList<TaskJson>();
+	for(TaskJson taskJson: tasks){
+	    TaskType type = TaskType.toTaskType(taskJson.getTaskType());
+	    if (type == TaskType.STANDALONE) {
+		result.add(taskJson);
+	    } else if (type == TaskType.CONTAINER) {
+		int subtaskNo = 0;
+		for (TaskJson subTaskJson : tasks) {
+		    if (subTaskJson.getParentId() == taskJson.getId()) {
+			subtaskNo++;
+			taskJson.getSubtasks().add(subTaskJson);
+		    }
+		}
+		taskJson.setSubtaskNum(subtaskNo);
+		result.add(taskJson);
+	    }
+	}
+	return result;
+	
+    }
+
+    public static List<CategoryJson> categorizeTaskJsonList(List<TaskJson> tasks,
+	    List<Category> categories) {
+	
+	List<CategoryJson> list = Category.categoryListToCategoryJsonList(categories);
+
+	for (TaskJson task : tasks) {
+	    for (CategoryJson cat : list) {
+		if (cat.getId() == task.getCategoryId()) {
+		    cat.getTaskList().add(task);
+		    cat.incrementTaskNum();
+		    break;
+		}
+	    }
+	}
+	return list;
     }
     
     @Override

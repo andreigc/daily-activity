@@ -20,83 +20,9 @@ import com.andreicg.solution.dailyagenda.model.CategoryDAO;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
-import com.andreigc.solution.dailyagenda.enums.TaskType;
 
 @Path("/tasks")
 public class TaskResource {
-
-    private TaskJson taskToTaskJson(Task task) {
-	TaskJson taskJson = new TaskJson();
-	taskJson.setId(task.getId());
-	taskJson.setDescription(task.getDescription());
-	taskJson.setPriority(task.getPriority());
-	taskJson.setUserId(task.getUserId());
-	taskJson.setTaskType(task.getTaskType());
-	taskJson.setCompletionGrade(task.getCompletionGrade());
-	taskJson.setStatusComment(task.getStatusComment());
-	taskJson.setCategoryId(task.getCategoryId());
-	return taskJson;
-    }
-
-    private List<TaskJson> taskListToTaskJsonList(List<Task> tasks) {
-	List<TaskJson> tasksJson = new ArrayList<TaskJson>();
-	for (Task task : tasks) {
-	    TaskJson taskJson = taskToTaskJson(task);
-	    TaskType type = TaskType.toTaskType(task.getTaskType());
-	    if (type == TaskType.STANDALONE) {
-		tasksJson.add(taskJson);
-	    } else if (type == TaskType.CONTAINER) {
-		int subtaskNo = 0;
-		for (Task subTask : tasks) {
-		    if (subTask.getParentId() == task.getId()) {
-			subtaskNo++;
-			TaskJson subTaskJson = taskToTaskJson(subTask);
-			taskJson.getSubtasks().add(subTaskJson);
-		    }
-		}
-		taskJson.setSubtaskNum(subtaskNo);
-		tasksJson.add(taskJson);
-	    }
-	}
-	return tasksJson;
-    }
-    
-
-    private List<CategoryJson> categorizeTaskJsonList(List<TaskJson> tasks,List<Category> categories){
-	List<CategoryJson> list = new ArrayList<CategoryJson>();
-	
-	for(Category cat: categories){
-	    CategoryJson catJson = new CategoryJson();
-	    catJson.setDescription(cat.getDescription());
-	    catJson.setName(cat.getCategoryName());
-	    catJson.setId(cat.getId());
-	    list.add(catJson);
-	}
-	
-	for(TaskJson task:tasks){
-	    for(CategoryJson cat: list){
-		if(cat.getId()==task.getCategoryId()){
-		    cat.getTaskList().add(task);
-		    cat.incrementTaskNum();
-		    break;
-		}
-	    }
-	}
-	return list;
-    }
-
-    private Task taskJsonToTask(TaskJson taskJson) {
-	Task task = new Task();
-	task.setId(taskJson.getId());
-	task.setDescription(taskJson.getDescription());
-	task.setPriority(taskJson.getPriority());
-	task.setUserId(taskJson.getUserId());
-	task.setTaskType(taskJson.getTaskType());
-	task.setCompletionGrade(taskJson.getCompletionGrade());
-	task.setStatusComment(taskJson.getStatusComment());
-	task.setCategoryId(taskJson.getCategoryId());
-	return task;
-    }
 
     @Path("/get/multiple")
     @GET
@@ -107,47 +33,49 @@ public class TaskResource {
 	List<Task> tasks = TaskDAO.getAllTasksForUser(userId, categoryId,
 		CompletionType.getCompletionTypeById(completionType));
 	List<Category> categories = null;
-	if(categoryId!=0){
+	if (categoryId != 0) {
 	    categories = new ArrayList<Category>();
 	    CategoryDAO.getCategory(categoryId);
-	}else{
+	} else {
 	    categories = CategoryDAO.getAllCategories();
 	}
-	List<TaskJson> nestedTasks =  taskListToTaskJsonList(tasks);
-	return categorizeTaskJsonList(nestedTasks,categories);
+	List<TaskJson> tasksJson = Task.taskListToTaskJsonList(tasks);
+	List<TaskJson> nestedTasks = TaskJson
+		.hierarchizeTaskJsonList(tasksJson);
+	return TaskJson.categorizeTaskJsonList(nestedTasks, categories);
     }
-    
+
     @Path("/get/single")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public TaskJson getTask(@QueryParam("taskId") int taskId){
+    public TaskJson getTask(@QueryParam("taskId") int taskId) {
 	Task task = TaskDAO.getTask(taskId);
-	if(task!=null){
-	    return taskToTaskJson(task);
+	if (task != null) {
+	    return Task.taskToTaskJson(task);
 	}
 	return null;
-	
+
     }
 
     @Path("/create")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void addTask(TaskJson input) {
-	Task task = taskJsonToTask(input);
+	Task task = TaskJson.taskJsonToTask(input);
 	TaskDAO.createTask(task);
     }
-    
+
     @Path("/update")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateTask(TaskJson input){
-	Task task = taskJsonToTask(input);
+    public void updateTask(TaskJson input) {
+	Task task = TaskJson.taskJsonToTask(input);
 	TaskDAO.updateTask(task);
     }
-    
+
     @Path("/delete")
     @DELETE
-    public void deleteTask(@QueryParam("taskId") int taskId){
+    public void deleteTask(@QueryParam("taskId") int taskId) {
 	TaskDAO.deleteTask(taskId);
     }
 

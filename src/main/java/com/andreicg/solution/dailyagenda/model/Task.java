@@ -1,6 +1,11 @@
 package com.andreicg.solution.dailyagenda.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.andreicg.solution.dailyagenda.json.TaskJson;
 
 
 public class Task {
@@ -106,6 +111,29 @@ public class Task {
 
     public void setStatusComment(String statusComment) {
 	this.statusComment = statusComment;
+    }
+    
+    public static TaskJson taskToTaskJson(Task task) {
+	TaskJson taskJson = new TaskJson();
+	taskJson.setId(task.getId());
+	taskJson.setDescription(task.getDescription());
+	taskJson.setPriority(task.getPriority());
+	taskJson.setUserId(task.getUserId());
+	taskJson.setParentId(task.getParentId());
+	taskJson.setTaskType(task.getTaskType());
+	taskJson.setCompletionGrade(task.getCompletionGrade());
+	taskJson.setStatusComment(task.getStatusComment());
+	taskJson.setCategoryId(task.getCategoryId());
+	return taskJson;
+    }
+
+    public static List<TaskJson> taskListToTaskJsonList(List<Task> tasks) {
+	List<TaskJson> tasksJson = new ArrayList<TaskJson>();
+	for (Task task : tasks) {
+	    tasksJson.add(taskToTaskJson(task));
+	}
+	return tasksJson;
+	    
     }
 
     @Override
