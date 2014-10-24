@@ -26,7 +26,9 @@
 		<div class="bordered-task" ng-repeat="task in category.taskList | orderBy:orderProp" ng-hover-task id="{{task.id}}" type="{{task.taskType}}" >
 		
 			<div class="row" >
-			  <div class="col-lg-2" ><p>{{task.priority}}</p></div>
+			  <div class="col-lg-2" >
+			     <span class="label label-{{task.priority | priority}}">{{task.priority | priority}}</span>
+			  </div>
 			  <div class="col-lg-4" ><a href="#/tasks/{{task.id}}">{{task.description}}</a></div>
 			  <div class="col-lg-4" ><p>{{task.statusComment}}</p></div>
 			  <div class="col-lg-2" >
@@ -42,7 +44,9 @@
 			
 			<div ng-if="task.subtaskNum" >
 				<div class="row bordered-subtask" ng-repeat="subtask in task.subtasks | orderBy:orderProp">
-					<div class="col-lg-2" ><p>{{subtask.priority}}</p></div>
+					<div class="col-lg-2" >
+						<span class="label label-{{subtask.priority | priority}}">{{subtask.priority | priority}}</span>
+					</div>
 				  	<div class="col-lg-4" ><a href="#/tasks/{{subtask.id}}">{{subtask.description}}</a></div>
 				  	<div class="col-lg-4" ><p>{{subtask.statusComment}}</p></div>
 				  	<div class="col-lg-2" >
