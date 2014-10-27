@@ -1,26 +1,47 @@
 <div>
 	<form name="newTaskForm">
-		Category <select ng-model="category" ng-change="update()" ng-options="category.name for category in categories">
-		</select>
-		<br/>
+	
+	<div class="row new-task-row">
+		<div class="col-lg-1"> Category </div>
+		<div class="col-lg-2">
+		  	<select class="new-task-align" ng-model="category" ng-change="update()" ng-options="category.name for category in categories">
+		 	</select>
+		</div>
+	</div>
+	
+	<div class="row new-task-row">
+		<div class="col-lg-1"> Task Type </div>
+		<div class="col-lg-2">
+			<span ng-if="task.parentId">Subtask</span>
+			<span ng-if="!task.parentId"> 
+			   <select class="new-task-align" ng-model="$parent.taskType" ng-change="updateTaskType()" ng-options="type.name for type in taskTypes">
+			   </select>
+		    </span>
+	    </div>
+	</div>
 		
-		
-		
-		<br/>
-		Task Description: <input type="text" name="taskDescription"  ng-model="task.description" required>
+	<div class="row new-task-row">
+		<div class="col-lg-1">Task Description  </div>
+		<div class="col-lg-2"><input class="new-task-align" type="text" name="taskDescription"  ng-model="task.description" required>
 		   <span class="error" ng-show="newTaskForm.taskDescription.$error.required">
 			   Required!
 		   </span>
-		   
-		<br/>
-		<br/>
+		</div>
+	</div>
 		
-		Priority <select ng-model="priority" ng-change="update()" ng-options="priority.name for priority in priorities">
-		</select>
-		<br/>
+	<div class="row new-task-row">
+		<div class="col-lg-1">Priority</div>
+		<div class="col-lg-2">
+			<select class="new-task-align" ng-model="priority" ng-change="update()" ng-options="priority.name for priority in priorities">
+			</select>
+		</div>
 		
+	</div>
 		 
 	</form>
+	
+	<!--  
 	<hr>
 	<tt>task = {{task}}</tt>
+	-->
 </div>
