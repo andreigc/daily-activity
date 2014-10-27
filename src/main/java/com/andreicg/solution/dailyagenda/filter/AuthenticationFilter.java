@@ -1,6 +1,10 @@
 package com.andreicg.solution.dailyagenda.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,7 +14,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+
+
 
 public class AuthenticationFilter implements Filter {
 
@@ -19,17 +28,9 @@ public class AuthenticationFilter implements Filter {
 	    FilterChain chain) throws IOException, ServletException {
 	if (request instanceof HttpServletRequest) {
 	    HttpServletRequest httpReq = (HttpServletRequest) request;
-	    Cookie[] cookies = httpReq.getCookies();
-	    if (cookies != null) {
-		for (Cookie cookie : cookies) {
-		    if (cookie.getName().equals("sessionId")) {
-			if (AuthenticationUtil.isAuthenticated(cookie
-				.getValue())) {
-			    chain.doFilter(request, response);
-			    return;
-			}
-		    }
-		}
+	    String sessionId = httpReq.getHeader("sessionId");
+	    if (!StringUtils.isBlank(sessionId)) {
+		chain.doFilter(new AddParamsToHttpRequestHeader(httpReq), response);
 	    }
 	    if (response instanceof HttpServletResponse) {
 		HttpServletResponse res = (HttpServletResponse) response;

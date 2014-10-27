@@ -11,6 +11,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import com.andreicg.solution.dailyagenda.json.CategoryJson;
@@ -60,9 +62,15 @@ public class TaskResource {
     @Path("/create")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addTask(TaskJson input) {
+    public TaskJson addTask(@Context HttpHeaders headers,TaskJson input) {
 	Task task = TaskJson.taskJsonToTask(input);
-	TaskDAO.createTask(task);
+	List<String> userIdHeader = headers.getRequestHeader("userId");
+	if(userIdHeader!=null && userIdHeader.size()==1){
+	    task.setUserId(Integer.parseInt(userIdHeader.get(0)));
+	    TaskDAO.createTask(task);
+	    return input;
+	}
+	return null;
     }
 
     @Path("/update")

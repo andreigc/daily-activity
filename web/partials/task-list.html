@@ -63,29 +63,32 @@
 				</div>
 			</div>
 
-			<div class="row bordered-subtask new-subtask-{{task.id}} hidden" ng-click="go('/tasks/create/parent/1')">
+			<a href="#/tasks/create/category/{{category.id}}/parent/{{task.id}}">
+				<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
+					<div class="col-lg-2">
+						<span class="glyphicon glyphicon-plus"></span>
+					</div>
+					<div class="col-lg-4">
+						<p>
+							<em>Add a new sub-task</em>
+						</p>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<a href="#/tasks/create/category/{{category.id}}">
+			<div class="row bordered-task new-task-{{category.id}} hidden">
 				<div class="col-lg-2">
 					<span class="glyphicon glyphicon-plus"></span>
 				</div>
 				<div class="col-lg-4">
 					<p>
-						<em>Add a new sub-task</em>
+						<em>Add a new task</em>
 					</p>
 				</div>
 			</div>
-
-		</div>
-
-		<div class="row bordered-task new-task-{{category.id}} hidden" ng-click=" go('/tasks/create')">
-			<div class="col-lg-2">
-				<span class="glyphicon glyphicon-plus"></span>
-			</div>
-			<div class="col-lg-4">
-				<p>
-					<em>Add a new task</em>
-				</p>
-			</div>
-		</div>
+		</a>
 
 
 	</div>

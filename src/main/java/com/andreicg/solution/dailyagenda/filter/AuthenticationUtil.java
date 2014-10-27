@@ -7,18 +7,16 @@ public class AuthenticationUtil {
 
     static Map<String, Integer> sessionMap = new ConcurrentHashMap<String, Integer>();
 
-    
-    //phony temporary method
+    //hardcoded temporary method
     public static boolean isAuthenticated(String sessionId){
 	return true;
     }
-    
-    /*
-    public static boolean isAuthenticated(String sessionId) {
-	if (sessionMap.containsKey(sessionId)) {
-	    return true;
-	}
-	return false;
-    }*/
-    
+
+
+    //hardcoded temporary method
+    public static int getUserId(String header) {
+	if(header!=null)
+	    return 1;
+	return -1;
+    }
 }

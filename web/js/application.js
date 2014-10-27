@@ -1,19 +1,14 @@
-var dailyAgendaApp = angular.module('dailyAgendaApp', [ 'ngCookies', 'ngRoute',
-		'dailyAppControllers', 'dailyAppFilters', 'dailyAppDirectives' ]);
-
-dailyAgendaApp.config(function($httpProvider) {
-	$httpProvider.defaults.withCredentials = true;
-});
+var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'dailyAppFilters', 'dailyAppDirectives','ngRoute']);
 
 dailyAgendaApp.config([ '$routeProvider', function($routeProvider) {
 
 	$routeProvider.when('/tasks', {
 		templateUrl : 'partials/task-list.html',
 		controller : 'TaskListController'
-	}).when('/tasks/create/parent/:parentId', {
+	}).when('/tasks/create/category/:categoryId/parent/:parentId', {
 		templateUrl : 'partials/task-create.html',
 		controller : 'TaskNewController'
-	}).when('/tasks/create/', {
+	}).when('/tasks/create/category/:categoryId/', {
 		templateUrl : 'partials/task-create.html',
 		controller : 'TaskNewController'
 	}).otherwise({

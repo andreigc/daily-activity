@@ -1,13 +1,14 @@
 <div>
-	<form name="newTaskForm">
+	<form name="newTaskForm" ng-submit="submit()">
 	
+	 
 	<div class="row new-task-row">
 		<div class="col-lg-1"> Category </div>
 		<div class="col-lg-2">
-		  	<select class="new-task-align" ng-model="category" ng-change="update()" ng-options="category.name for category in categories">
-		 	</select>
+		  	{{currentCategoryName}}
 		</div>
 	</div>
+
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1"> Task Type </div>
@@ -37,11 +38,10 @@
 		</div>
 		
 	</div>
-		 
-	</form>
 	
-	<!--  
-	<hr>
-	<tt>task = {{task}}</tt>
-	-->
+	<div class="row new-task-row">
+		<div class="col-lg-1"><input type="submit" id="submit" value="Submit" /></div>
+	</div> 
+	
+	</form>
 </div>

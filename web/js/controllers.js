@@ -3,36 +3,35 @@ var dailyAppcontrollers = angular.module('dailyAppControllers', []);
 dailyAppcontrollers.controller('TaskListController', [
 		'$scope',
 		'$http',
-		'$cookies',
 		'$location',
-		function($scope, $http, $cookies, $location) {
-			$cookies.sessionId = 1;
-			$http.get("rest/tasks/get/multiple?userId=1").success(
+		function($scope, $http, $location) {
+			$http.get("rest/tasks/get/multiple?userId=1",{headers: {'sessionId':1}}).success(
 					function(data) {
 						$scope.categories = data;
 					});
 
 			$scope.orderProp = '-priority';
-
-			$scope.go = function(path) {
-				$location.path(path);
-			};
-
 		} ]);
 
 dailyAppcontrollers.controller('TaskNewController', [ '$scope', '$routeParams',
-		'$http', '$cookies', function($scope, $routeParams, $http, $cookies) {
+		'$http','$location', function($scope, $routeParams, $http,$location) {
 			$scope.task = {}
 			if ($routeParams.parentId) {
 				$scope.task.parentId = $routeParams.parentId;
 				
 			} 
-			$cookies.sessionId = 1;
-			$http.get("rest/categories/get").success(function(data) {
+			
+			$scope.task.categoryId=$routeParams.categoryId;
+			
+			$http.get("rest/categories/get",{headers: {'sessionId':1}}).success(function(data) {
 				$scope.categories = data;
-				$scope.category = $scope.categories[0];
-				$scope.task.categoryId = $scope.category.id;
+				for(i=0;i<$scope.categories.length;i++){
+					if($scope.categories[i].id==$routeParams.categoryId){
+						$scope.currentCategoryName = $scope.categories[i].name;
+					}
+				}
 			});
+			
 
 			$scope.priorities = [ {
 				name : 'low',
@@ -62,12 +61,22 @@ dailyAppcontrollers.controller('TaskNewController', [ '$scope', '$routeParams',
 			}
 
 			$scope.update = function() {
-				$scope.task.categoryId = $scope.category.id;
 				$scope.task.priority = $scope.priority.value;
 			}
 			
 			$scope.updateTaskType = function(){
 				$scope.task.taskType = $scope.taskType.value;
 			}
+			
+			$scope.submit = function() {
+				
+				$http.put("rest/tasks/create",$scope.task,{headers: {'sessionId':2}}).
+				  success(function(data, status, headers, config) {
+					  $location.path('/tasks');
+				  }).error(function(data, status, headers, config) {
+					    alert("Creating new task failed");
+			      });
+				
+		      };
 
 		} ]);
