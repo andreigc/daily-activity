@@ -17,7 +17,7 @@
 					<span class="label label-{{task.priority | priority}}">{{task.priority
 						| priority}}</span>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<a href="#/tasks/{{task.id}}">{{task.description}}</a>
 				</div>
 				<div class="col-lg-4">
@@ -33,18 +33,21 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-1 hidden delete-icon-task-{{task.id}}" ng-click="deleteTask(task.id)">
+						<div class="glyphicon glyphicon-trash"></div>
+				</div>
 			</div>
 
 
 
 			<div ng-if="task.subtaskNum">
 				<div class="row bordered-subtask"
-					ng-repeat="subtask in task.subtasks | orderBy:orderProp">
+					ng-repeat="subtask in task.subtasks | orderBy:orderProp" ng-hover-sub-task id="{{subtask.id}}">
 					<div class="col-lg-2">
 						<span class="label label-{{subtask.priority | priority}}">{{subtask.priority
 							| priority}}</span>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						<a href="#/tasks/{{subtask.id}}">{{subtask.description}}</a>
 					</div>
 					<div class="col-lg-4">
@@ -60,6 +63,9 @@
 							</div>
 						</div>
 					</div>
+						<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="deleteTask(subtask.id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</div>
 				</div>
 			</div>
 

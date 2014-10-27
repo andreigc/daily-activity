@@ -1,19 +1,32 @@
-var dailyAppcontrollers = angular.module('dailyAppControllers', []);
+var dailyAppControllers = angular.module('dailyAppControllers', []);
 
-dailyAppcontrollers.controller('TaskListController', [
+dailyAppControllers.controller('TaskListController', [
 		'$scope',
 		'$http',
 		'$location',
 		function($scope, $http, $location) {
-			$http.get("rest/tasks/get/multiple?userId=1",{headers: {'sessionId':1}}).success(
+			$scope.loadData = function(){
+				$http.get("rest/tasks/get/multiple?userId=1",{headers: {'sessionId':1}}).success(
+			
 					function(data) {
 						$scope.categories = data;
 					});
+				$scope.orderProp = '-priority';
+			}
+			$scope.loadData();
+			
+			
+			$scope.deleteTask = function(taskId) {
+				
+				var vr = $http['delete']('rest/tasks/delete?taskId='+taskId,{headers: {'sessionId':1}}).success(function(data){
+					alert('Deleted');
+					$scope.loadData();
+				})
+			}
+		}]);
 
-			$scope.orderProp = '-priority';
-		} ]);
 
-dailyAppcontrollers.controller('TaskNewController', [ '$scope', '$routeParams',
+dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 		'$http','$location', function($scope, $routeParams, $http,$location) {
 			$scope.task = {}
 			if ($routeParams.parentId) {

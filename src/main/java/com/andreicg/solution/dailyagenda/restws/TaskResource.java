@@ -16,6 +16,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import com.andreicg.solution.dailyagenda.json.CategoryJson;
+import com.andreicg.solution.dailyagenda.json.Response;
 import com.andreicg.solution.dailyagenda.json.TaskJson;
 import com.andreicg.solution.dailyagenda.model.Category;
 import com.andreicg.solution.dailyagenda.model.CategoryDAO;
@@ -62,13 +63,16 @@ public class TaskResource {
     @Path("/create")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public TaskJson addTask(@Context HttpHeaders headers,TaskJson input) {
+    public Response addTask(@Context HttpHeaders headers,TaskJson input) {
 	Task task = TaskJson.taskJsonToTask(input);
 	List<String> userIdHeader = headers.getRequestHeader("userId");
 	if(userIdHeader!=null && userIdHeader.size()==1){
 	    task.setUserId(Integer.parseInt(userIdHeader.get(0)));
 	    TaskDAO.createTask(task);
-	    return input;
+	    
+	    Response response = new Response();
+	    response.setMessage("done");
+	    return response;
 	}
 	return null;
     }
@@ -83,8 +87,11 @@ public class TaskResource {
 
     @Path("/delete")
     @DELETE
-    public void deleteTask(@QueryParam("taskId") int taskId) {
+    public Response deleteTask(@QueryParam("taskId") int taskId) {
 	TaskDAO.deleteTask(taskId);
+	Response response = new Response();
+	response.setMessage("done");
+	return response;
     }
 
 }
