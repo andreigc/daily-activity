@@ -3,8 +3,8 @@ var dailyAppControllers = angular.module('dailyAppControllers', []);
 dailyAppControllers.controller('TaskListController', [
 		'$scope',
 		'$http',
-		'$location',
-		function($scope, $http, $location) {
+		'$location','$timeout',
+		function($scope, $http, $location,$timeout) {
 			$scope.loadData = function(){
 				$http.get("rest/tasks/get/multiple?userId=1",{headers: {'sessionId':1}}).success(
 			
@@ -16,13 +16,22 @@ dailyAppControllers.controller('TaskListController', [
 			$scope.loadData();
 			
 			
-			$scope.deleteTask = function(taskId) {
-				
-				var vr = $http['delete']('rest/tasks/delete?taskId='+taskId,{headers: {'sessionId':1}}).success(function(data){
-					alert('Deleted');
+			$scope.showDeleteModal = function(task) {
+				$('#deleteModal').modal('show');
+				$scope.toDeleteTask = task;
+			}
+			
+			$scope.deleteToDeleteTask = function(){
+				$('#deleteModal').modal('hide');
+				$http['delete']('rest/tasks/delete?taskId='+$scope.toDeleteTask.id,{headers: {'sessionId':1}}).success(function(data){
 					$scope.loadData();
+					angular.element(document.querySelector('.alert-deleted-success')).removeClass('hidden');
+					
+					$timeout(function(){angular.element(document.querySelector('.alert-deleted-success')).addClass('hidden');},2000);
+					
 				})
 			}
+			
 		}]);
 
 

@@ -1,5 +1,41 @@
 <div class="container-custom">
 
+
+<!--  
+	
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+-->
+		<div class="alert alert-success alert-dismissible alert-deleted-success hidden" role="alert">
+	  		<button type="button" class="close" data-dismiss="alert">
+	  			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	  		</button>
+	  		<strong>Task successfully deleted</strong>
+	</div>
+
+<!-- Delete Item Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Delete</h4>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure you want to delete this task? <pre>{{toDeleteTask.description}}</pre>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+	        <button type="button" class="btn btn-primary" ng-click="deleteToDeleteTask()">Delete</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+
 	<div class="my-category" ng-repeat="category in categories"
 		ng-hover-category id="{{category.id}}">
 		<div class="row">
@@ -33,7 +69,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-1 hidden delete-icon-task-{{task.id}}" ng-click="deleteTask(task.id)">
+				<div class="col-lg-1 hidden delete-icon-task-{{task.id}}" ng-click="showDeleteModal(task)">
 						<div class="glyphicon glyphicon-trash"></div>
 				</div>
 			</div>
@@ -63,7 +99,7 @@
 							</div>
 						</div>
 					</div>
-						<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="deleteTask(subtask.id)">
+						<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="showDeleteModal(subtask)">
 							<span class="glyphicon glyphicon-trash"></span>
 						</div>
 				</div>
