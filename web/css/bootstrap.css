@@ -1440,6 +1440,10 @@ pre code {
   margin-left: auto;
 }
 
+.subtask-container{
+  margin-bottom: 20px;
+}
+
 
 .bordered-task{
     padding-left:1%;
@@ -4509,13 +4513,7 @@ a.label:focus {
 .label-default[href]:focus {
   background-color: #5e5e5e;
 }
-.label-low {
-  background-color: #428bca;
-}
-.label-low[href]:hover,
-.label-low[href]:focus {
-  background-color: #3071a9;
-}
+
 .label-success {
   background-color: #5cb85c;
 }
@@ -4529,6 +4527,15 @@ a.label:focus {
 .label-info[href]:hover,
 .label-info[href]:focus {
   background-color: #31b0d5;
+}
+
+
+.label-low {
+  background-color: #428bca;
+}
+.label-low[href]:hover,
+.label-low[href]:focus {
+  background-color: #3071a9;
 }
 .label-important {
   background-color: #f0ad4e;
@@ -4544,6 +4551,7 @@ a.label:focus {
 .label-urgent[href]:focus {
   background-color: #c9302c;
 }
+
 .badge {
   display: inline-block;
   min-width: 10px;
