@@ -1,7 +1,12 @@
 package com.andreicg.solution.dailyagenda.restws;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+
+
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,6 +19,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.andreicg.solution.dailyagenda.json.CategoryJson;
 import com.andreicg.solution.dailyagenda.json.Response;
@@ -32,9 +40,16 @@ public class TaskResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<CategoryJson> getTasks(@QueryParam("userId") int userId,
 	    @QueryParam("categoryId") int categoryId,
-	    @QueryParam("completionType") int completionType) {
+	    @QueryParam("completionType") int completionType,
+	    @QueryParam("startDateMillis") String startDateMillis) {
+	
+	long startDateMilliseconds = 0;
+	if(!StringUtils.isBlank(startDateMillis)){
+	    startDateMilliseconds = Long.parseLong(startDateMillis);
+	}
+	
 	List<Task> tasks = TaskDAO.getAllTasksForUser(userId, categoryId,
-		CompletionType.getCompletionTypeById(completionType));
+		CompletionType.getCompletionTypeById(completionType),startDateMilliseconds);
 	List<Category> categories = null;
 	if (categoryId != 0) {
 	    categories = new ArrayList<Category>();

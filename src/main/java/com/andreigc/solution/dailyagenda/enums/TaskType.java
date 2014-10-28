@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public enum TaskType {
-    STANDALONE(1), CONTAINER(2), SUBTASK(3);
+    STANDALONE(1){}, CONTAINER(2), SUBTASK(3);
     TaskType(int ordinal) {
 	this.ordinal = ordinal;
     }
@@ -24,5 +24,9 @@ public enum TaskType {
     
     public boolean isTaskType(int ordinal){
 	return this.ordinal == ordinal;
+    }
+    
+    public int getOrdinal(){
+	return ordinal;
     }
 }

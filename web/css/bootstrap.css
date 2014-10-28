@@ -1433,6 +1433,11 @@ pre code {
 	width:170px;
 }
 
+.task-list-filter-align{
+	width:100px;
+	
+}
+
 .container-custom{
   padding-right: 15px;
   padding-left: 15px;

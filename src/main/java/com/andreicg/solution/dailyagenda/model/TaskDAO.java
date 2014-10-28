@@ -1,15 +1,18 @@
 package com.andreicg.solution.dailyagenda.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+//import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
+import com.andreigc.solution.dailyagenda.enums.TaskType;
 
 public class TaskDAO {
     
@@ -84,25 +87,37 @@ public class TaskDAO {
     }
     
     public static List<Task> getAllTasksForUser(int userId,int categoryId,
-	    CompletionType completionType) {
-	String queryString = "SELECT * from public.\"Task\" WHERE \"UserID\" = ?";
+	    CompletionType completionType,long startDateMilliseconds) {
+	
+	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"RecurrenceID\" = public.\"Recurrence\".\"ID\" WHERE \"UserID\" = ?";
 	if (completionType == CompletionType.COMPLETED) {
-	    queryString += " AND \"CompletionGrade\"="+Task.COMPLETED_VALUE;
+	    queryString += " AND  \"CompletionGrade\"="+Task.COMPLETED_VALUE ;
 	} else if (completionType == CompletionType.UNFINISHED) {
-	    queryString += " AND \"CompletionGrade\"<"+Task.COMPLETED_VALUE;
+	    queryString += " AND ( \"CompletionGrade\"<"+Task.COMPLETED_VALUE +" OR \"TaskType\"="+TaskType.SUBTASK.getOrdinal()+")";
 	}
+	
+	
 	
 	if(categoryId>0){
 	    queryString += " AND \"CategoryID\"= ? ";
+	
+	}
+	
+	if(startDateMilliseconds > 0){
+	    queryString += " AND \"StartDate\" <= ?";
 	}
 	
 	try {
 	    Connection connection = getConnection();
 	    PreparedStatement prepStatement = connection
 		    .prepareStatement(queryString);
-	    prepStatement.setInt(1, userId);
+	    int index = 1;
+	    prepStatement.setInt(index++, userId);
 	    if(categoryId>0){
-		prepStatement.setInt(2, categoryId);
+		prepStatement.setInt(index++, categoryId);
+	    }
+	    if(startDateMilliseconds > 0){
+		prepStatement.setDate(index++, new Date(startDateMilliseconds));
 	    }
 	    return executeTaskSelectQuery(prepStatement);
 	} catch (SQLException e) {

@@ -1,6 +1,16 @@
 <div class="container-custom">
 
 
+<div class="row">
+		<div class="col-lg-2"> 
+			<p class="task-list-filter-align">Completion</p>
+			<span class="task-list-filter-align"> 
+			   <select ng-model="completedFilter" ng-change="loadData()" ng-options="completedType.name for completedType in completedTypes">
+			   </select>
+		    </span>
+	    </div>
+</div>
+<hr/>
 <!--  
 	
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
@@ -60,7 +70,7 @@
 				
 				<div class="col-lg-3">
 					
-					<b style="color:rgb(0,128,255);">{{task.description}}</b>
+					<b style="color:rgb(0,128,240);">{{task.description}}</b>
 				</div>
 				<div class="col-lg-4">
 					<em>{{task.statusComment}}</em>
@@ -82,61 +92,65 @@
 				</div>
 			</div>
 
-			<div ng-if="task.subtaskNum" class="subtask-container">
-				<span class="glyphicon glyphicon-arrow-right"></span>
-				<div class="row bordered-subtask"
-					ng-repeat="subtask in task.subtasks | orderBy:orderProp" ng-hover-sub-task id="{{subtask.id}}">
-					<div class="col-lg-2">
-						<span class="label label-{{subtask.priority | priority}}">{{subtask.priority
-							| priority}}</span>
-					</div>
-					<div class="col-lg-3">
-						<p style="color:rgb(0,128,255);">{{subtask.description}}</p>
-					</div>
-					<div class="col-lg-4">
-						<em>{{subtask.statusComment}}</em>
-					</div>
-					<div class="col-lg-2">
-						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-								style="width: {{subtask.completionGrade- 1}}px">
-								<span class="sr-only">{{subtask.completionGrade - 1}}%
-									Complete
-								</span>
-								<span ng-if="subtask.completionGrade===101">Completed</span>
+			<div class="subtask-container" ng-if="task.taskType==2">
+				<div ng-if="task.subtaskNum" >
+					<span class="glyphicon glyphicon-arrow-right"></span>
+					<div class="row bordered-subtask"
+						ng-repeat="subtask in task.subtasks | orderBy:orderProp" ng-hover-sub-task id="{{subtask.id}}">
+						<div class="col-lg-2">
+							<span class="label label-{{subtask.priority | priority}}">{{subtask.priority
+								| priority}}</span>
+						</div>
+						<div class="col-lg-3">
+							<p style="color:rgb(0,128,240);">{{subtask.description}}</p>
+						</div>
+						<div class="col-lg-4">
+							<em>{{subtask.statusComment}}</em>
+						</div>
+						<div class="col-lg-2">
+							<div class="progress">
+								<div class="progress-bar progress-bar-success" role="progressbar"
+									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+									style="width: {{subtask.completionGrade- 1}}px">
+									<span class="sr-only">{{subtask.completionGrade - 1}}%
+										Complete
+									</span>
+									<span ng-if="subtask.completionGrade===101">Completed</span>
+								</div>
 							</div>
 						</div>
+							<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="showDeleteModal(subtask)">
+								<span class="glyphicon glyphicon-trash"></span>
+							</div>
 					</div>
-						<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="showDeleteModal(subtask)">
-							<span class="glyphicon glyphicon-trash"></span>
+				</div>
+	
+				<a href="#/tasks/create/category/{{category.id}}/parent/{{task.id}}" ng-if="task.completionGrade<101">
+					<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
+						<div class="col-lg-2">
+							<span class="glyphicon glyphicon-plus"></span>
 						</div>
-				</div>
+						<div class="col-lg-4">
+							<p>
+								<em style="color:rgb(0,128,240);">Add a new sub-task</em>
+							</p>
+						</div>
+					</div>
+				</a>
+				
 			</div>
-
-			<a href="#/tasks/create/category/{{category.id}}/parent/{{task.id}}">
-				<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
-					<div class="col-lg-2">
-						<span class="glyphicon glyphicon-plus"></span>
-					</div>
-					<div class="col-lg-4">
-						<p>
-							<em>Add a new sub-task</em>
-						</p>
-					</div>
-				</div>
-			</a>
+			
 		</div>
 
-		<a href="#/tasks/create/category/{{category.id}}">
+		<a href="#/tasks/create/category/{{category.id}}" ng-if="completedFilter.value!=1">
 			<div class="row bordered-task new-task-{{category.id}} hidden">
 				<div class="col-lg-2">
 					<span class="glyphicon glyphicon-plus"></span>
 				</div>
 				<div class="col-lg-4">
-					<p>
-						<em>Add a new task</em>
-					</p>
+					<p><b>
+						<em style="color:rgb(0,128,240);">Add a new task</em>
+					</b></p>
 				</div>
 			</div>
 		</a>

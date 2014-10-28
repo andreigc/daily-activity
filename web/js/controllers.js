@@ -5,8 +5,22 @@ dailyAppControllers.controller('TaskListController', [
 		'$http',
 		'$location','$timeout',
 		function($scope, $http, $location,$timeout) {
+			
+			$scope.completedTypes = [ {
+				name : 'All',
+				value : 0
+			}, {
+				name : 'Completed',
+				value : 1
+			}, {
+				name : 'Unfinished',
+				value : 2
+			} ];
+			$scope.completedFilter = $scope.completedTypes[2];
+			
+			
 			$scope.loadData = function(){
-				$http.get("rest/tasks/get/multiple?userId=1",{headers: {'sessionId':1}}).success(
+				$http.get("rest/tasks/get/multiple?userId=1&completionType="+$scope.completedFilter.value,{headers: {'sessionId':1}}).success(
 			
 					function(data) {
 						$scope.categories = data;
@@ -14,6 +28,8 @@ dailyAppControllers.controller('TaskListController', [
 				$scope.orderProp = '-priority';
 			}
 			$scope.loadData();
+			
+			
 			
 			
 			$scope.showDeleteModal = function(task) {
