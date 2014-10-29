@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
 import com.andreigc.solution.dailyagenda.enums.TaskType;
@@ -34,10 +35,10 @@ public class TaskDAO {
 	return conn;
     }
     
-    private static List<Task> executeTaskSelectQuery(
+    private static List<Pair<Task,Recurrence>> executeTaskSelectQuery(
 	    PreparedStatement prepStatement) throws SQLException {
 	ResultSet resultSet = prepStatement.executeQuery();
-	List<Task> tasks = new ArrayList<Task>();
+	List<Pair<Task,Recurrence>> tasks = new ArrayList<Pair<Task,Recurrence>>();
 	// construct task list from query result
 	while (resultSet.next()) {
 	    int id = resultSet.getInt("ID");
@@ -64,19 +65,25 @@ public class TaskDAO {
 	    task.setPriority(priority);
 	    task.setCompletionGrade(completionGrade);
 	    task.setStatusComment(statusComment);
-
-	    tasks.add(task);
+	    
+	    Date startDate = resultSet.getDate("StartDate");
+	    
+	    Recurrence recurrence = new Recurrence();
+	    recurrence.setId(recurrenceId);
+	    recurrence.setStartDate(startDate);
+	    
+	    tasks.add(Pair.of(task, recurrence));
 	}
 	return tasks;
     }
 
-    public static Task getTask(int taskId){
-	String queryString = "SELECT * from public.\"Task\" WHERE \"ID\" = ?";
+    public static Pair<Task,Recurrence> getTask(int taskId){
+	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"RecurrenceID\" = public.\"Recurrence\".\"ID\" WHERE \"ID\" = ?";
 	try{
 	    Connection connection = getConnection();
 	    PreparedStatement prepStatement = connection.prepareStatement(queryString);
 	    prepStatement.setInt(1, taskId);
-	    List<Task> tasks = executeTaskSelectQuery(prepStatement);
+	    List<Pair<Task,Recurrence>> tasks = executeTaskSelectQuery(prepStatement);
 	    if(tasks.size()==1){
 		return tasks.get(0);
 	    }
@@ -86,7 +93,7 @@ public class TaskDAO {
 	return null;
     }
     
-    public static List<Task> getAllTasksForUser(int userId,int categoryId,
+    public static List<Pair<Task,Recurrence>> getAllTasksForUser(int userId,int categoryId,
 	    CompletionType completionType,long startDateMilliseconds) {
 	
 	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"RecurrenceID\" = public.\"Recurrence\".\"ID\" WHERE \"UserID\" = ?";
@@ -123,7 +130,7 @@ public class TaskDAO {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	return new ArrayList<Task>();
+	return new ArrayList<Pair<Task,Recurrence>>();
     }
 
     public static void createTask(Task task) {
@@ -176,7 +183,7 @@ public class TaskDAO {
      */
     public static void updateTask(Task task) {
 	StringBuilder builder = new StringBuilder("UPDATE public.\"Task\" SET ");
-	Task dbTask = getTask(task.getId());
+	Task dbTask = getTask(task.getId()).getLeft();
 	
 	List<String> queryParts = new ArrayList<String>();
 	int categoryId = task.getCategoryId();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.andreicg.solution.dailyagenda.json.TaskJson;
 
@@ -113,7 +114,10 @@ public class Task {
 	this.statusComment = statusComment;
     }
     
-    public static TaskJson taskToTaskJson(Task task) {
+    public static TaskJson taskToTaskJson(Pair<Task,Recurrence> taskPair) {
+	Task task = taskPair.getLeft();
+	Recurrence recurrence = taskPair.getRight();
+	
 	TaskJson taskJson = new TaskJson();
 	taskJson.setId(task.getId());
 	taskJson.setDescription(task.getDescription());
@@ -124,13 +128,16 @@ public class Task {
 	taskJson.setCompletionGrade(task.getCompletionGrade());
 	taskJson.setStatusComment(task.getStatusComment());
 	taskJson.setCategoryId(task.getCategoryId());
+	
+	taskJson.setStartDate(recurrence.getStartDate());
+	
 	return taskJson;
     }
 
-    public static List<TaskJson> taskListToTaskJsonList(List<Task> tasks) {
+    public static List<TaskJson> taskListToTaskJsonList(List<Pair<Task,Recurrence>> taskPairs) {
 	List<TaskJson> tasksJson = new ArrayList<TaskJson>();
-	for (Task task : tasks) {
-	    tasksJson.add(taskToTaskJson(task));
+	for (Pair<Task,Recurrence> taskPair : taskPairs) {
+	    tasksJson.add(taskToTaskJson(taskPair));
 	}
 	return tasksJson;
 	    

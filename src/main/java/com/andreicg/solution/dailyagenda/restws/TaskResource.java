@@ -1,12 +1,7 @@
 package com.andreicg.solution.dailyagenda.restws;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-
-
-
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,6 +23,7 @@ import com.andreicg.solution.dailyagenda.json.Response;
 import com.andreicg.solution.dailyagenda.json.TaskJson;
 import com.andreicg.solution.dailyagenda.model.Category;
 import com.andreicg.solution.dailyagenda.model.CategoryDAO;
+import com.andreicg.solution.dailyagenda.model.Recurrence;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
@@ -48,7 +44,7 @@ public class TaskResource {
 	    startDateMilliseconds = Long.parseLong(startDateMillis);
 	}
 	
-	List<Task> tasks = TaskDAO.getAllTasksForUser(userId, categoryId,
+	List<Pair<Task,Recurrence>> tasks = TaskDAO.getAllTasksForUser(userId, categoryId,
 		CompletionType.getCompletionTypeById(completionType),startDateMilliseconds);
 	List<Category> categories = null;
 	if (categoryId != 0) {
@@ -67,7 +63,7 @@ public class TaskResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public TaskJson getTask(@QueryParam("taskId") int taskId) {
-	Task task = TaskDAO.getTask(taskId);
+	Pair<Task,Recurrence> task = TaskDAO.getTask(taskId);
 	if (task != null) {
 	    return Task.taskToTaskJson(task);
 	}

@@ -1,6 +1,7 @@
 package com.andreicg.solution.dailyagenda.json;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -20,6 +21,7 @@ public class TaskJson {
     private int taskType;
     private int completionGrade;
     private String statusComment;
+    private Date startDate;
 
     private int subtaskNum;
     private List<TaskJson> subtasks = new ArrayList<TaskJson>();
@@ -171,5 +173,15 @@ public class TaskJson {
     public String toString(){
 	return ToStringBuilder.reflectionToString(this);
     }
+
+    public Date getStartDate() {
+	return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
+
+ 
 
 }
