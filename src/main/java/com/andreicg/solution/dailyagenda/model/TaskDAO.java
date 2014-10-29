@@ -19,7 +19,6 @@ public class TaskDAO {
     
     private static final String COLUMN_ID = "\"ID\"";
     private static final String COLUMN_DESCRIPTION = "\"Description\"";
-    private static final String COLUMN_RECURRENCE_ID = "\"RecurrenceID\"";
     private static final String COLUMN_CATEGORY_ID = "\"CategoryID\"";
     private static final String COLUMN_PRIORITY = "\"Priority\"";
     private static final String COLUMN_COMPLETION_GRADE = "\"CompletionGrade\"";
@@ -45,7 +44,6 @@ public class TaskDAO {
 	    int categoryId = resultSet.getInt("CategoryID");
 	    int userId = resultSet.getInt("UserID");
 	    int parentId = resultSet.getInt("ParentID");
-	    int recurrenceId = resultSet.getInt("RecurrenceID");
 	    int taskType = resultSet.getInt("TaskType");
 	    String scheduledAtHours = resultSet.getString("ScheduledAtHours");
 	    String description = resultSet.getString("Description");
@@ -57,7 +55,6 @@ public class TaskDAO {
 	    task.setId(id);
 	    task.setCategoryId(categoryId);
 	    task.setParentId(parentId);
-	    task.setRecurrenceId(recurrenceId);
 	    task.setTaskType(taskType);
 	    task.setUserId(userId);
 	    task.setScheduledAtHours(scheduledAtHours);
@@ -69,8 +66,8 @@ public class TaskDAO {
 	    Date startDate = resultSet.getDate("StartDate");
 	    
 	    Recurrence recurrence = new Recurrence();
-	    recurrence.setId(recurrenceId);
 	    recurrence.setStartDate(startDate);
+	    recurrence.setTaskId(id);
 	    
 	    tasks.add(Pair.of(task, recurrence));
 	}
@@ -78,7 +75,7 @@ public class TaskDAO {
     }
 
     public static Pair<Task,Recurrence> getTask(int taskId){
-	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"RecurrenceID\" = public.\"Recurrence\".\"ID\" WHERE \"ID\" = ?";
+	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"ID\" = public.\"Recurrence\".\"TaskID\" WHERE \"ID\" = ?";
 	try{
 	    Connection connection = getConnection();
 	    PreparedStatement prepStatement = connection.prepareStatement(queryString);
@@ -96,7 +93,7 @@ public class TaskDAO {
     public static List<Pair<Task,Recurrence>> getAllTasksForUser(int userId,int categoryId,
 	    CompletionType completionType,long startDateMilliseconds) {
 	
-	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"RecurrenceID\" = public.\"Recurrence\".\"ID\" WHERE \"UserID\" = ?";
+	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"ID\" = public.\"Recurrence\".\"TaskID\" WHERE \"UserID\" = ?";
 	if (completionType == CompletionType.COMPLETED) {
 	    queryString += " AND  \"CompletionGrade\"="+Task.COMPLETED_VALUE ;
 	} else if (completionType == CompletionType.UNFINISHED) {
@@ -133,12 +130,12 @@ public class TaskDAO {
 	return new ArrayList<Pair<Task,Recurrence>>();
     }
 
-    public static void createTask(Task task) {
+    public static int createTask(Task task) {
 	String insertQuery = "INSERT INTO public.\"Task\" ";
 	insertQuery += "(\"CategoryID\", \"UserID\", \"ParentID\","
-		+ "\"RecurrenceID\", \"TaskType\", \"ScheduledAtHours\", \"Description\""
+		+"\"TaskType\", \"ScheduledAtHours\", \"Description\""
 		+ ", \"Priority\", \"CompletionGrade\", \"StatusComment\") VALUES"
-		+ "(?,?,?,?,?,?,?,?,?,?)";
+		+ "(?,?,?,?,?,?,?,?,?) RETURNING \"ID\"";
 	try {
 	    Connection connection = getConnection();
 	    PreparedStatement prepStatement = connection
@@ -155,22 +152,22 @@ public class TaskDAO {
 	    } else {
 		prepStatement.setInt(3, task.getParentId());
 	    }
-	    if (task.getRecurrenceId() == 0) {
-		prepStatement.setNull(4, java.sql.Types.INTEGER);
-	    } else {
-		prepStatement.setInt(4, task.getRecurrenceId());
-	    }
 
-	    prepStatement.setInt(5, task.getTaskType());
-	    prepStatement.setString(6, task.getScheduledAtHours());
-	    prepStatement.setString(7, task.getDescription());
-	    prepStatement.setInt(8, task.getPriority());
-	    prepStatement.setInt(9, task.getCompletionGrade());
-	    prepStatement.setString(10, task.getStatusComment());
-	    prepStatement.executeUpdate();
+	    prepStatement.setInt(4, task.getTaskType());
+	    prepStatement.setString(5, task.getScheduledAtHours());
+	    prepStatement.setString(6, task.getDescription());
+	    prepStatement.setInt(7, task.getPriority());
+	    prepStatement.setInt(8, task.getCompletionGrade());
+	    prepStatement.setString(9, task.getStatusComment());
+	    ResultSet result = prepStatement.executeQuery();
+	    if (result.next()) {
+		return result.getInt("ID");
+	    }  
+	    
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
+	return -1;
     }
     
     
@@ -194,13 +191,6 @@ public class TaskDAO {
 	    queryParts.add(queryPart.toString());
 	}
 	
-	int recurrenceId = task.getRecurrenceId();
-	if(recurrenceId>0 && recurrenceId!=dbTask.getRecurrenceId()){
-	    StringBuilder queryPart = new StringBuilder(COLUMN_RECURRENCE_ID);
-	    queryPart.append("=");
-	    queryPart.append(recurrenceId);
-	    queryParts.add(queryPart.toString());
-	}
 	
 	String description = task.getDescription();
 	if(!StringUtils.isEmpty(task.getDescription()) && !description.equals(dbTask.getDescription())){

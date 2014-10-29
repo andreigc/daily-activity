@@ -18,6 +18,7 @@ public class RecurrenceDAO {
     }
     
     
+    /*
     private static Recurrence executeCategorySelectQuery(
 	    PreparedStatement prepStatement) throws SQLException {
 	ResultSet resultSet = prepStatement.executeQuery();
@@ -38,6 +39,7 @@ public class RecurrenceDAO {
 	return null;
     }
     
+    
     public static Recurrence getRecurrence(int recurrenceId){
 	String queryString = "SELECT * from public.\"Recurrence\" WHERE \"ID\" = ?";
 	try{
@@ -49,7 +51,42 @@ public class RecurrenceDAO {
 	    e.printStackTrace();
 	}
 	return null;
+    }*/
+
+
+    public static void createRecurrence(Recurrence recurrence) {
+	String insertQuery = "INSERT INTO public.\"Recurrence\" ";
+	insertQuery += "(\"StartDate\",\"TaskID\") VALUES "
+		+ "(?,?)";
+	try {
+	    Connection connection = getConnection();
+	    PreparedStatement prepStatement = connection
+		    .prepareStatement(insertQuery);
+	    Date startDate = recurrence.getStartDate();
+	    prepStatement.setDate(1,new java.sql.Date(startDate.getTime()));
+	    prepStatement.setInt(2,recurrence.getTaskId());
+	    
+	    prepStatement.executeUpdate();
+	    
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
     }
     
+    
+    /*
+    public static void deleteRecurrence(long recurrenceId) {
+	String deleteQuery = "DELETE FROM public.\"Recurrence\" WHERE \"ID\" = ?";
+	try {
+	    Connection connection = getConnection();
+	    PreparedStatement prepStatement = connection
+		    .prepareStatement(deleteQuery);
+	    prepStatement.setLong(1,recurrenceId);
+	    prepStatement.executeUpdate();
+	}catch(SQLException e){
+	    e.printStackTrace();
+	}
+    }
+    */
     
 }

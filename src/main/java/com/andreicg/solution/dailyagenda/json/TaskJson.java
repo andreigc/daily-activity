@@ -169,18 +169,20 @@ public class TaskJson {
 	return list;
     }
     
+    public Date getStartDate() {
+   	return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+   	this.startDate = startDate;
+    }
+    
     @Override
     public String toString(){
 	return ToStringBuilder.reflectionToString(this);
     }
 
-    public Date getStartDate() {
-	return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-	this.startDate = startDate;
-    }
+   
 
  
 

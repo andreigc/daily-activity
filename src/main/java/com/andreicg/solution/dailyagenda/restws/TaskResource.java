@@ -24,6 +24,7 @@ import com.andreicg.solution.dailyagenda.json.TaskJson;
 import com.andreicg.solution.dailyagenda.model.Category;
 import com.andreicg.solution.dailyagenda.model.CategoryDAO;
 import com.andreicg.solution.dailyagenda.model.Recurrence;
+import com.andreicg.solution.dailyagenda.model.RecurrenceDAO;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
@@ -79,7 +80,15 @@ public class TaskResource {
 	List<String> userIdHeader = headers.getRequestHeader("userId");
 	if(userIdHeader!=null && userIdHeader.size()==1){
 	    task.setUserId(Integer.parseInt(userIdHeader.get(0)));
-	    TaskDAO.createTask(task);
+	    int taskId = TaskDAO.createTask(task);
+	    
+	    Recurrence recurrence = new Recurrence();
+	    recurrence.setStartDate(input.getStartDate());
+	    recurrence.setTaskId(taskId);
+	    RecurrenceDAO.createRecurrence(recurrence);
+	  //  task.setRecurrenceId(createdRecurrenceId);
+	    
+	    
 	    
 	    Response response = new Response();
 	    response.setMessage("done");

@@ -18,10 +18,13 @@ dailyAppControllers.controller('TaskListController', [
 			} ];
 			$scope.completedFilter = $scope.completedTypes[2];
 			
+			$scope.selectedDate = new Date();
 			
 			$scope.loadData = function(){
-				$http.get("rest/tasks/get/multiple?userId=1&completionType="+$scope.completedFilter.value,{headers: {'sessionId':1}}).success(
-			
+				var baseUrl = "rest/tasks/get/multiple";
+				var paramsUrl = "?userId=1&completionType="+$scope.completedFilter.value;
+				paramsUrl+="&startDateMillis="+$scope.selectedDate.getTime();
+				$http.get(baseUrl+paramsUrl,{headers: {'sessionId':1}}).success(
 					function(data) {
 						$scope.categories = data;
 					});
@@ -60,6 +63,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 			} 
 			
 			$scope.task.categoryId=$routeParams.categoryId;
+			$scope.task.startDate = new Date();
 			
 			$http.get("rest/categories/get",{headers: {'sessionId':1}}).success(function(data) {
 				$scope.categories = data;

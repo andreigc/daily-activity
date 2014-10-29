@@ -16,7 +16,6 @@ public class Task {
     private int id;
     private int userId;
     private int parentId;
-    private int recurrenceId;
     private int categoryId;
     private int taskType;
     private String scheduledAtHours;
@@ -56,14 +55,6 @@ public class Task {
 
     public void setParentId(int parentId) {
 	this.parentId = parentId;
-    }
-
-    public int getRecurrenceId() {
-	return recurrenceId;
-    }
-
-    public void setRecurrenceId(int recurrenceId) {
-	this.recurrenceId = recurrenceId;
     }
 
     public int getTaskType() {

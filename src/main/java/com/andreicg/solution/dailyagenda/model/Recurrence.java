@@ -4,18 +4,10 @@ import java.util.Date;
 
 public class Recurrence {
 
-    private int id;
     private int recurrenceType;
     private int recurrenceDayOfTheWeek;
     private Date startDate;
-
-    public int getId() {
-	return id;
-    }
-
-    public void setId(int id) {
-	this.id = id;
-    }
+    private int taskId;
 
     public int getRecurrenceType() {
 	return recurrenceType;
@@ -40,5 +32,14 @@ public class Recurrence {
     public void setStartDate(Date startDate) {
 	this.startDate = startDate;
     }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+    
 
 }
