@@ -15,13 +15,6 @@
 	    </div>
 </div>
 <hr/>
-<!--  
-	
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
-
--->
 		<div class="alert alert-success alert-dismissible alert-deleted-success hidden" role="alert">
 	  		<button type="button" class="close" data-dismiss="alert">
 	  			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -53,8 +46,7 @@
 	
 	
 
-	<div class="my-category" ng-repeat="category in categories"
-		ng-hover-category id="{{category.id}}">
+	<div class="my-category" ng-repeat="category in categories" ng-hover-category id="{{category.id}}">
 		<div class="row">
 			<div class="col-lg-4">
 				<span>{{category.name}}</span>
@@ -66,8 +58,7 @@
 		
 		<br/>
 		
-		<div class="bordered-task"
-			ng-repeat="task in category.taskList | orderBy:orderProp"
+		<div class="bordered-task" ng-repeat="task in category.taskList | orderBy:orderProp"
 			ng-hover-task id="{{task.id}}" type="{{task.taskType}}">
 
 			
@@ -97,8 +88,10 @@
 					</div>
 				</div>
 				<div class="col-lg-2 hidden delete-icon-task-{{task.id}}" >
-						<span class="glyphicon glyphicon-plus" ng-if="task.completionGrade<101 && task.taskType==2" ng-click="openCreateNewTask(category.id,task.id)" style="margin-left:15px;float:left;padding:3px;border:1px dashed #ccc"></span>
-						<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(task)" style="margin-left:15px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span class="glyphicon glyphicon-edit" ng-click="openEditTask(task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(task)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span class="glyphicon glyphicon-plus" ng-if="task.completionGrade<101 && task.taskType==2" ng-click="openCreateNewTask(category.id,task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						
 				</div>
 			</div>
 
@@ -114,7 +107,7 @@
 						<div class="col-lg-3">
 							<p style="color:rgb(0,128,240);">{{subtask.description}}</p>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<em>{{subtask.statusComment}}</em>
 						</div>
 						<div class="col-lg-2">
@@ -129,17 +122,13 @@
 								</div>
 							</div>
 						</div>
-							<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="showDeleteModal(subtask)">
-								<span class="glyphicon glyphicon-trash"></span>
-								
+							<div class="col-lg-2 hidden delete-icon-subtask-{{subtask.id}}" >
+								<span class="glyphicon glyphicon-edit" ng-click="openEditTask(subtask.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+								<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(subtask)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
 							</div>
 					</div>
 				</div>
-				
 			</div>
-			
 		</div>
-
 	</div>
-
 </div>

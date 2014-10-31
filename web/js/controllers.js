@@ -1,5 +1,6 @@
 var dailyAppControllers = angular.module('dailyAppControllers', []);
 
+
 dailyAppControllers.controller('TaskListController', [
 		'$scope',
 		'$http',
@@ -32,6 +33,11 @@ dailyAppControllers.controller('TaskListController', [
 			}
 			$scope.loadData();
 			
+			$scope.openEditTask = function(taskId){
+				var path = 'tasks/edit/';
+				path+=taskId;
+				$location.path(path);
+			}
 			
 			$scope.openCreateNewTask = function(categoryId,taskId){
 				var path = '/tasks/create/category/';
@@ -130,3 +136,8 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 		      };
 
 		} ]);
+
+
+dailyAppControllers.controller('TaskEditController',['$scope',function($scope){
+	
+}])

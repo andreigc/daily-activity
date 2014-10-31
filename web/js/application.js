@@ -11,6 +11,9 @@ dailyAgendaApp.config([ '$routeProvider', function($routeProvider) {
 	}).when('/tasks/create/category/:categoryId/', {
 		templateUrl : 'partials/task-create.html',
 		controller : 'TaskNewController'
+	}).when('/tasks/edit/:taskId',{
+		templateUrl: 'partials/task-edit.html',
+		controller: 'TaskEditController'
 	}).otherwise({
 		redirectTo : '/tasks'
 	});
