@@ -33,7 +33,15 @@ dailyAppControllers.controller('TaskListController', [
 			$scope.loadData();
 			
 			
-			
+			$scope.openCreateNewTask = function(categoryId,taskId){
+				var path = '/tasks/create/category/';
+				path+=categoryId;
+				if(taskId){
+					path+='/parent/';
+					path+=taskId;
+				}
+				$location.path(path);
+			}
 			
 			$scope.showDeleteModal = function(task) {
 				$('#deleteModal').modal('show');

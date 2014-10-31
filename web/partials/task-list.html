@@ -56,11 +56,16 @@
 	<div class="my-category" ng-repeat="category in categories"
 		ng-hover-category id="{{category.id}}">
 		<div class="row">
-			<div class="col-lg-2">
-				<p>{{category.name}}</p>
+			<div class="col-lg-4">
+				<span>{{category.name}}</span>
+				<span class="glyphicon glyphicon-plus" ng-if="completedFilter.value!=1"  ng-click="openCreateNewTask(category.id)" 
+				style="position: absolute;left: 110px;padding:3px;border:1px dashed #ccc"></span>
+				
 			</div>
 		</div>
-
+		
+		<br/>
+		
 		<div class="bordered-task"
 			ng-repeat="task in category.taskList | orderBy:orderProp"
 			ng-hover-task id="{{task.id}}" type="{{task.taskType}}">
@@ -76,7 +81,7 @@
 					
 					<b style="color:rgb(0,128,240);">{{task.description}}</b>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<em>{{task.statusComment}}</em>
 				</div>
 				<div class="col-lg-2">
@@ -91,8 +96,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-1 hidden delete-icon-task-{{task.id}}" ng-click="showDeleteModal(task)">
-						<div class="glyphicon glyphicon-trash"></div>
+				<div class="col-lg-2 hidden delete-icon-task-{{task.id}}" >
+						<span class="glyphicon glyphicon-plus" ng-if="task.completionGrade<101 && task.taskType==2" ng-click="openCreateNewTask(category.id,task.id)" style="margin-left:15px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(task)" style="margin-left:15px;float:left;padding:3px;border:1px dashed #ccc"></span>
 				</div>
 			</div>
 
@@ -125,40 +131,14 @@
 						</div>
 							<div class="col-lg-1 hidden delete-icon-subtask-{{subtask.id}}" ng-click="showDeleteModal(subtask)">
 								<span class="glyphicon glyphicon-trash"></span>
+								
 							</div>
 					</div>
 				</div>
-	
-				<a href="#/tasks/create/category/{{category.id}}/parent/{{task.id}}" ng-if="task.completionGrade<101">
-					<div class="row bordered-subtask new-subtask-{{task.id}} hidden">
-						<div class="col-lg-2">
-							<span class="glyphicon glyphicon-plus"></span>
-						</div>
-						<div class="col-lg-4">
-							<p>
-								<em style="color:rgb(0,128,240);">Add a new sub-task</em>
-							</p>
-						</div>
-					</div>
-				</a>
 				
 			</div>
 			
 		</div>
-
-		<a href="#/tasks/create/category/{{category.id}}" ng-if="completedFilter.value!=1">
-			<div class="row bordered-task new-task-{{category.id}} hidden">
-				<div class="col-lg-2">
-					<span class="glyphicon glyphicon-plus"></span>
-				</div>
-				<div class="col-lg-4">
-					<p><b>
-						<em style="color:rgb(0,128,240);">Add a new task</em>
-					</b></p>
-				</div>
-			</div>
-		</a>
-
 
 	</div>
 

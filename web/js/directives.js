@@ -38,19 +38,3 @@ dailyAppDirectives.directive('ngHoverTask', function() {
 		}
 	}
 });
-
-dailyAppDirectives.directive('ngHoverCategory', function() {
-	return {
-		link : function(scope, element, attributes) {
-			var id = attributes.id;
-			element.bind('mouseenter', function() {
-				angular.element(document.querySelector('.new-task-' + id))
-						.removeClass('hidden');
-			})
-			element.bind('mouseleave', function() {
-				angular.element(document.querySelector('.new-task-' + id))
-						.addClass('hidden');
-			})
-		}
-	}
-});
