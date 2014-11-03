@@ -41,4 +41,7 @@ public class AuthenticationUtil {
 	return sessionId;
     }
     
+    public static void doLogout(String sessionId){
+	sessionMap.remove(sessionId);
+    }
 }
