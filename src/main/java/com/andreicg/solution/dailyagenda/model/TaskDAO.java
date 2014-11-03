@@ -211,7 +211,7 @@ public class TaskDAO {
 	}
 	
 	int completionGrade = task.getCompletionGrade();
-	if(completionGrade>0 && completionGrade!=task.getCompletionGrade()){
+	if(completionGrade>0 && completionGrade!=dbTask.getCompletionGrade()){
 	    StringBuilder queryPart = new StringBuilder(COLUMN_COMPLETION_GRADE);
 	    queryPart.append("=");
 	    queryPart.append(completionGrade);

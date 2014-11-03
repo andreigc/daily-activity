@@ -78,6 +78,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 			
 			$scope.task.categoryId=$routeParams.categoryId;
 			$scope.task.startDate = new Date();
+			$scope.task.completionGrade=1;
 			
 			$http.get("rest/categories/get",{headers: {'sessionId':1}}).success(function(data) {
 				$scope.categories = data;
@@ -138,6 +139,39 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 		} ]);
 
 
-dailyAppControllers.controller('TaskEditController',['$scope',function($scope){
+dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$http','$location',function($scope,$routeParams,$http,$location){
+	
+	$scope.priorities = [ {
+		name : 'low',
+		value : 1
+	}, {
+		name : 'important',
+		value : 2
+	}, {
+		name : 'urgent',
+		value : 3
+	} ];
+	
+	var baseUrl = "rest/tasks/get/single";
+	var paramsUrl = "?taskId="+$routeParams.taskId;
+	$http.get(baseUrl+paramsUrl,{headers: {'sessionId':1}}).success(
+		function(data) {
+			$scope.task = data;
+			
+			$scope.percentCompleted = $scope.task.completionGrade-1;
+			$scope.task.completionGrade = $scope.percentCompleted + 1;
+			$scope.priority = $scope.priorities[$scope.task.priority-1];
+		});
+
+	$scope.update = function() {
+		$scope.task.completionGrade = $scope.percentCompleted + 1;
+		$scope.task.priority = $scope.priority.value;
+	}
+	
+	$scope.submit = function(){
+		$http.post('rest/tasks/update',$scope.task,{headers: {'sessionId':1}}).success(function(data){
+			$location.path("tasks");
+		})
+	}
 	
 }])
