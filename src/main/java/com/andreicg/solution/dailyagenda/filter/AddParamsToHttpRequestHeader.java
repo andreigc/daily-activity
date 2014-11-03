@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import com.andreicg.solution.dailyagenda.util.AuthenticationUtil;
+
 public class AddParamsToHttpRequestHeader extends HttpServletRequestWrapper {
     public AddParamsToHttpRequestHeader(HttpServletRequest request) {
         super(request);

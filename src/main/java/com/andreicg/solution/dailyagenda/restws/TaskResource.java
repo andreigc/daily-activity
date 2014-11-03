@@ -29,7 +29,7 @@ import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
 
-@Path("/tasks")
+@Path("/protected/tasks")
 public class TaskResource {
 
     @Path("/get/multiple")
@@ -87,8 +87,6 @@ public class TaskResource {
 	    recurrence.setTaskId(taskId);
 	    RecurrenceDAO.createRecurrence(recurrence);
 	  //  task.setRecurrenceId(createdRecurrenceId);
-	    
-	    
 	    
 	    Response response = new Response();
 	    response.setMessage("done");

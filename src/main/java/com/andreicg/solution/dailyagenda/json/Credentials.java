@@ -1,6 +1,6 @@
 package com.andreicg.solution.dailyagenda.json;
 
-public class LoginJson {
+public class Credentials {
 
     private String userName;
     private String encodedPassword;

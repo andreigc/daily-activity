@@ -29,12 +29,12 @@
 		<filter-name>AuthenticationFilter</filter-name>
 		<filter-class>com.andreicg.solution.dailyagenda.filter.AuthenticationFilter</filter-class>
 	</filter>
- 
-    <filter-mapping>
+	
+	<filter-mapping>
     	<filter-name>AuthenticationFilter</filter-name>
-    	<url-pattern>/rest/*</url-pattern>
+    	<url-pattern>/rest/protected/*</url-pattern>
     </filter-mapping>
-    
+  
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

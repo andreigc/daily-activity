@@ -11,7 +11,7 @@ import com.andreicg.solution.dailyagenda.json.CategoryJson;
 import com.andreicg.solution.dailyagenda.model.Category;
 import com.andreicg.solution.dailyagenda.model.CategoryDAO;
 
-@Path("/categories")
+@Path("/protected/categories")
 public class CategoryResource {
 
     @Path("/get")
