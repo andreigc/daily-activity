@@ -1,6 +1,24 @@
 var dailyAppControllers = angular.module('dailyAppControllers', []);
 
 
+dailyAppControllers.controller('LoginController',['$scope','$http',function($scope,$http){
+	
+	$scope.credentials={};
+	
+	$scope.updateEncodedPassword = function(){
+		var hash = CryptoJS.MD5($scope.password);
+		$scope.credentials.encodedPassword =hash.toString(CryptoJS.enc.Hex)
+	};
+	
+	
+	$scope.submitCredentials = function(){
+		$http.post('rest/auth/login',$scope.credentials).success(function(data){
+			$scope.sessionId = data;
+		});
+	};
+	
+}])
+
 dailyAppControllers.controller('TaskListController', [
 		'$scope',
 		'$http',

@@ -1,0 +1,26 @@
+
+<form name="loginForm" ng-submit="submitCredentials()">
+
+	<div class="row new-task-row">
+		<div class="col-lg-1">Username</div>
+		<div class="col-lg-2">
+			<input class="new-task-align" type="text" ng-model="credentials.userName">
+		</div>
+	</div>
+
+	<div class="row new-task-row">
+		<div class="col-lg-1">Password</div>
+		<div class="col-lg-2">
+			<input class="new-task-align" type="password" ng-model="password" ng-change="updateEncodedPassword()">
+		</div>
+	</div>
+
+	<div class="row new-task-row">
+		<div class="col-lg-1">
+			<input type="submit" id="submit" value="Submit" />
+		</div>
+	</div>
+	{{credentials}}
+</form>
+
+
