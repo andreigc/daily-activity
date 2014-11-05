@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2014-10-29 15:25:13
+-- Started on 2014-11-05 10:20:58
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -22,7 +22,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1981 (class 0 OID 0)
+-- TOC entry 1983 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -66,7 +66,7 @@ CREATE SEQUENCE "Category_ID_seq"
 ALTER TABLE public."Category_ID_seq" OWNER TO postgres;
 
 --
--- TOC entry 1982 (class 0 OID 0)
+-- TOC entry 1984 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: Category_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -126,7 +126,7 @@ CREATE SEQUENCE "Task_ID_seq"
 ALTER TABLE public."Task_ID_seq" OWNER TO postgres;
 
 --
--- TOC entry 1983 (class 0 OID 0)
+-- TOC entry 1985 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: Task_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -141,7 +141,7 @@ ALTER SEQUENCE "Task_ID_seq" OWNED BY "Task"."ID";
 
 CREATE TABLE "User" (
     "ID" integer NOT NULL,
-    "Username" character(12),
+    "Username" character(12) NOT NULL,
     "Password" character(32),
     "FullName" character varying(50)
 );
@@ -165,7 +165,7 @@ CREATE SEQUENCE "User_ID_seq"
 ALTER TABLE public."User_ID_seq" OWNER TO postgres;
 
 --
--- TOC entry 1984 (class 0 OID 0)
+-- TOC entry 1986 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: User_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -198,7 +198,7 @@ ALTER TABLE ONLY "User" ALTER COLUMN "ID" SET DEFAULT nextval('"User_ID_seq"'::r
 
 
 --
--- TOC entry 1969 (class 0 OID 16405)
+-- TOC entry 1971 (class 0 OID 16405)
 -- Dependencies: 172
 -- Data for Name: Category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -210,7 +210,7 @@ COPY "Category" ("ID", "CategoryName", "Description") FROM stdin;
 
 
 --
--- TOC entry 1985 (class 0 OID 0)
+-- TOC entry 1987 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: Category_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -219,7 +219,7 @@ SELECT pg_catalog.setval('"Category_ID_seq"', 1, false);
 
 
 --
--- TOC entry 1973 (class 0 OID 16435)
+-- TOC entry 1975 (class 0 OID 16435)
 -- Dependencies: 176
 -- Data for Name: Recurrence; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -228,44 +228,50 @@ COPY "Recurrence" ("RecurrenceType", "RecurrenceDayOfTheWeek", "StartDate", "Tas
 0	\N	2014-08-10	2
 0	\N	2014-09-10	3
 0	\N	2014-11-10	16
+\N	\N	2014-10-31	174
+\N	\N	2014-11-10	175
+\N	\N	2014-10-31	176
 \.
 
 
 --
--- TOC entry 1971 (class 0 OID 16423)
+-- TOC entry 1973 (class 0 OID 16423)
 -- Dependencies: 174
 -- Data for Name: Task; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY "Task" ("ID", "CategoryID", "UserID", "ParentID", "TaskType", "ScheduledAtHours", "Description", "Priority", "CompletionGrade", "StatusComment") FROM stdin;
-2	1	1	\N	2	\N	Container Task	1	60	my very first container task
+174	1	1	\N	1	\N	test	2	101	sample commment
+2	1	1	\N	2	\N	Container Task	1	71	test
 16	2	1	\N	1	\N	Another personal task	3	20	started doing this
 3	2	1	\N	1	\N	Standalone Task	2	45	a standalone task
+175	1	1	2	3	\N	example subtask	2	1	\N
+176	1	1	2	3	\N	subtask	2	41	am facut o parte din el
 \.
 
 
 --
--- TOC entry 1986 (class 0 OID 0)
+-- TOC entry 1988 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: Task_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"Task_ID_seq"', 172, true);
+SELECT pg_catalog.setval('"Task_ID_seq"', 177, true);
 
 
 --
--- TOC entry 1967 (class 0 OID 16394)
+-- TOC entry 1969 (class 0 OID 16394)
 -- Dependencies: 170
 -- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY "User" ("ID", "Username", "Password", "FullName") FROM stdin;
-1	ageacar     	123                             	Andrei Geacar
+1	ageacar     	202cb962ac59075b964b07152d234b70	Andrei Geacar
 \.
 
 
 --
--- TOC entry 1987 (class 0 OID 0)
+-- TOC entry 1989 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: User_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -274,7 +280,7 @@ SELECT pg_catalog.setval('"User_ID_seq"', 1, true);
 
 
 --
--- TOC entry 1847 (class 2606 OID 16415)
+-- TOC entry 1849 (class 2606 OID 16415)
 -- Name: PKCategory; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -283,7 +289,7 @@ ALTER TABLE ONLY "Category"
 
 
 --
--- TOC entry 1849 (class 2606 OID 16447)
+-- TOC entry 1851 (class 2606 OID 16447)
 -- Name: PKTask; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -292,7 +298,7 @@ ALTER TABLE ONLY "Task"
 
 
 --
--- TOC entry 1854 (class 2606 OID 32790)
+-- TOC entry 1856 (class 2606 OID 32790)
 -- Name: PKTaskID; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -310,7 +316,16 @@ ALTER TABLE ONLY "User"
 
 
 --
--- TOC entry 1850 (class 1259 OID 16453)
+-- TOC entry 1847 (class 2606 OID 40961)
+-- Name: UniqueUsername; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "User"
+    ADD CONSTRAINT "UniqueUsername" UNIQUE ("Username");
+
+
+--
+-- TOC entry 1852 (class 1259 OID 16453)
 -- Name: fki_FKCategory; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -318,7 +333,7 @@ CREATE INDEX "fki_FKCategory" ON "Task" USING btree ("CategoryID");
 
 
 --
--- TOC entry 1851 (class 1259 OID 16465)
+-- TOC entry 1853 (class 1259 OID 16465)
 -- Name: fki_FKParent; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -326,7 +341,7 @@ CREATE INDEX "fki_FKParent" ON "Task" USING btree ("ParentID");
 
 
 --
--- TOC entry 1855 (class 1259 OID 32778)
+-- TOC entry 1857 (class 1259 OID 32778)
 -- Name: fki_FKTaskID; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -334,7 +349,7 @@ CREATE INDEX "fki_FKTaskID" ON "Recurrence" USING btree ("TaskID");
 
 
 --
--- TOC entry 1852 (class 1259 OID 16459)
+-- TOC entry 1854 (class 1259 OID 16459)
 -- Name: fki_FKUser; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -342,7 +357,7 @@ CREATE INDEX "fki_FKUser" ON "Task" USING btree ("UserID");
 
 
 --
--- TOC entry 1856 (class 2606 OID 16448)
+-- TOC entry 1858 (class 2606 OID 16448)
 -- Name: FKCategory; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -351,7 +366,7 @@ ALTER TABLE ONLY "Task"
 
 
 --
--- TOC entry 1858 (class 2606 OID 24576)
+-- TOC entry 1860 (class 2606 OID 24576)
 -- Name: FKParent; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -360,7 +375,7 @@ ALTER TABLE ONLY "Task"
 
 
 --
--- TOC entry 1859 (class 2606 OID 32784)
+-- TOC entry 1861 (class 2606 OID 32784)
 -- Name: FKTaskID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -369,7 +384,7 @@ ALTER TABLE ONLY "Recurrence"
 
 
 --
--- TOC entry 1857 (class 2606 OID 16454)
+-- TOC entry 1859 (class 2606 OID 16454)
 -- Name: FKUser; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -378,7 +393,7 @@ ALTER TABLE ONLY "Task"
 
 
 --
--- TOC entry 1980 (class 0 OID 0)
+-- TOC entry 1982 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -389,7 +404,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-10-29 15:25:13
+-- Completed on 2014-11-05 10:20:58
 
 --
 -- PostgreSQL database dump complete
