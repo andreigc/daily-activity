@@ -1,11 +1,14 @@
-var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'dailyAppFilters', 'dailyAppDirectives','ngRoute']);
+var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'dailyAppFilters', 'dailyAppDirectives','dailyAppServices','ngRoute']);
 
 
-dailyAgendaApp.run(function ($rootScope, $location) {
+dailyAgendaApp.run(function ($rootScope, $location,Authentication) {
 
 	  $rootScope.$on('$routeChangeStart', function (event, next, current) {
-	    if (next !== '/login') {
+	    if (next.$$route.originalPath !== '/login' && !Authentication.isLogged()) {
 	      $location.path('/login');
+	    }
+	    if (next.$$route.originalPath === '/login' && Authentication.isLogged()){
+	    	$location.path('/tasks');
 	    }
 	  });
 	  
