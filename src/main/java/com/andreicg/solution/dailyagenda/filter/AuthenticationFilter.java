@@ -26,7 +26,7 @@ public class AuthenticationFilter implements Filter {
 	    HttpServletRequest httpReq = (HttpServletRequest) request;
 	    String sessionId = httpReq.getHeader("sessionId");
 	    if (!StringUtils.isBlank(sessionId) && AuthenticationUtil.isAuthenticated(sessionId)) {
-		chain.doFilter(new AddParamsToHttpRequestHeader(httpReq), response);
+		chain.doFilter(request, response);
 	    } else  if (response instanceof HttpServletResponse) {
 		HttpServletResponse res = (HttpServletResponse) response;
 		res.setStatus(HttpServletResponse.SC_FORBIDDEN);

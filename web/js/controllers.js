@@ -77,7 +77,7 @@ dailyAppControllers.controller('TaskListController', [
 			
 			$scope.deleteToDeleteTask = function(){
 				$('#deleteModal').modal('hide');
-				$http['delete']('rest/protected/tasks/delete?taskId='+$scope.toDeleteTask.id,{headers: {'sessionId':1}}).success(function(data){
+				$http['delete']('rest/protected/tasks/delete?taskId='+$scope.toDeleteTask.id,{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
 					$scope.loadData();
 					angular.element(document.querySelector('.alert-deleted-success')).removeClass('hidden');
 					
@@ -90,7 +90,7 @@ dailyAppControllers.controller('TaskListController', [
 
 
 dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
-		'$http','$location', function($scope, $routeParams, $http,$location) {
+		'$http','$location','Authentication', function($scope, $routeParams, $http,$location,Authentication) {
 			$scope.task = {}
 			if ($routeParams.parentId) {
 				$scope.task.parentId = $routeParams.parentId;
@@ -101,7 +101,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 			$scope.task.startDate = new Date();
 			$scope.task.completionGrade=1;
 			
-			$http.get("rest/protected/categories/get",{headers: {'sessionId':1}}).success(function(data) {
+			$http.get("rest/protected/categories/get",{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data) {
 				$scope.categories = data;
 				for(i=0;i<$scope.categories.length;i++){
 					if($scope.categories[i].id==$routeParams.categoryId){
@@ -148,7 +148,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 			
 			$scope.submit = function() {
 				
-				$http.put("rest/protected/tasks/create",$scope.task,{headers: {'sessionId':2}}).
+				$http.put("rest/protected/tasks/create",$scope.task,{headers: {'sessionId':Authentication.getSessionId()}}).
 				  success(function(data, status, headers, config) {
 					  $location.path('/tasks');
 				  }).error(function(data, status, headers, config) {
@@ -160,7 +160,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 		} ]);
 
 
-dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$http','$location',function($scope,$routeParams,$http,$location){
+dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$http','$location','Authentication',function($scope,$routeParams,$http,$location,Authentication){
 	
 	$scope.priorities = [ {
 		name : 'low',
@@ -175,7 +175,7 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 	
 	var baseUrl = "rest/protected/tasks/get/single";
 	var paramsUrl = "?taskId="+$routeParams.taskId;
-	$http.get(baseUrl+paramsUrl,{headers: {'sessionId':1}}).success(
+	$http.get(baseUrl+paramsUrl,{headers: {'sessionId':Authentication.getSessionId()}}).success(
 		function(data) {
 			$scope.task = data;
 			
@@ -190,7 +190,7 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 	}
 	
 	$scope.submit = function(){
-		$http.post('rest/protected/tasks/update',$scope.task,{headers: {'sessionId':1}}).success(function(data){
+		$http.post('rest/protected/tasks/update',$scope.task,{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
 			$location.path("tasks");
 		})
 	}

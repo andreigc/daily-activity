@@ -27,6 +27,7 @@ import com.andreicg.solution.dailyagenda.model.Recurrence;
 import com.andreicg.solution.dailyagenda.model.RecurrenceDAO;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
+import com.andreicg.solution.dailyagenda.util.AuthenticationUtil;
 import com.andreigc.solution.dailyagenda.enums.CompletionType;
 
 @Path("/protected/tasks")
@@ -77,16 +78,17 @@ public class TaskResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTask(@Context HttpHeaders headers,TaskJson input) {
 	Task task = TaskJson.taskJsonToTask(input);
-	List<String> userIdHeader = headers.getRequestHeader("userId");
-	if(userIdHeader!=null && userIdHeader.size()==1){
-	    task.setUserId(Integer.parseInt(userIdHeader.get(0)));
+	List<String> sessionIdHeader = headers.getRequestHeader("sessionId");
+	
+	if(sessionIdHeader!=null && sessionIdHeader.size()==1){
+	    int userId  = AuthenticationUtil.getUserId(sessionIdHeader.get(0));
+	    task.setUserId(userId);
 	    int taskId = TaskDAO.createTask(task);
 	    
 	    Recurrence recurrence = new Recurrence();
 	    recurrence.setStartDate(input.getStartDate());
 	    recurrence.setTaskId(taskId);
 	    RecurrenceDAO.createRecurrence(recurrence);
-	  //  task.setRecurrenceId(createdRecurrenceId);
 	    
 	    Response response = new Response();
 	    response.setMessage("done");

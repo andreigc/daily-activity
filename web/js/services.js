@@ -1,13 +1,13 @@
 var myModule = angular.module('dailyAppServices', []);
-myModule.factory('Authentication', function() {
+myModule.factory('Authentication',['$window',function($window) {
   this.isLogged = function(){
-	  return !!this.sessionId;
+	  return !!$window.sessionStorage.sessionId;
   };
   this.getSessionId = function(){
-	  return this.sessionId;
+	  return $window.sessionStorage.sessionId;
   }
   this.setSessionId = function(sId){
-	  this.sessionId = sId;
+	  $window.sessionStorage.sessionId = sId;
   }
   return this;
-});
+}]);
