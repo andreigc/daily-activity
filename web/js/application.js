@@ -3,22 +3,32 @@ var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'd
 
 dailyAgendaApp.run(function ($rootScope, $location,Authentication) {
 
-	  $rootScope.$on('$routeChangeStart', function (event, next, current) {
-	    if (next.$$route.originalPath !== '/login' && !Authentication.isLogged()) {
-	      $location.path('/login');
-	    }
-	    if (next.$$route.originalPath === '/login' && Authentication.isLogged()){
-	    	$location.path('/tasks');
-	    }
-	  });
-	  
-	});
+	
+	
+$rootScope.$on('$routeChangeStart', function (event, next, current) {
+	  if(next){
+		  if (next.$$route.originalPath !== '/login' && next.$$route.originalPath !== '/logout' && next.$$route.originalPath !== '/register' && !Authentication.isLogged()) {
+			  $location.path('/login');
+		  }
+		  if ((next.$$route.originalPath === '/login'  ||  next.$$route.originalPath === '/register') && Authentication.isLogged()){
+			  $location.path('/tasks');
+		  }
+	  }
+  });
+});
 
 dailyAgendaApp.config([ '$routeProvider', function($routeProvider) {
-
+	
+	
 	$routeProvider.when('/login',{
 		templateUrl: 'partials/login.html',
 		controller: 'LoginController'
+	}).when('/logout',{
+		templateUrl: 'partials/logout.html',
+		controller: 'LogoutController'
+	}).when('/register',{
+		templateUrl: 'partials/register.html',
+		controller: 'RegisterController'
 	}).when('/tasks', {
 		templateUrl : 'partials/task-list.html',
 		controller : 'TaskListController'
@@ -32,4 +42,5 @@ dailyAgendaApp.config([ '$routeProvider', function($routeProvider) {
 		templateUrl: 'partials/task-edit.html',
 		controller: 'TaskEditController'
 	});
+
 } ]);

@@ -1,17 +1,24 @@
-
 <form name="loginForm" ng-submit="submitCredentials()">
+
+	<div class="row new-task-row">
+		<div class="col-lg-1">
+			<h4>Login</h4>
+		</div>
+	</div>
 
 	<div class="row new-task-row">
 		<div class="col-lg-1">Username</div>
 		<div class="col-lg-2">
-			<input class="new-task-align" type="text" ng-model="credentials.userName">
+			<input class="new-task-align" type="text"
+				ng-model="credentials.userName">
 		</div>
 	</div>
 
 	<div class="row new-task-row">
 		<div class="col-lg-1">Password</div>
 		<div class="col-lg-2">
-			<input class="new-task-align" type="password" ng-model="password" ng-change="updateEncodedPassword()">
+			<input class="new-task-align" type="password" ng-model="password"
+				ng-change="updateEncodedPassword()">
 		</div>
 	</div>
 
@@ -20,6 +27,18 @@
 			<input type="submit" id="submit" value="Submit" />
 		</div>
 	</div>
+
+	
+
+	<div class="row new-task-row">
+		
+		<div class="col-lg-3">
+		<hr/>
+			You don't have an account? Register <a href="#/register">here</a>
+		</div>
+	</div>
+	
+
 </form>
 
 
