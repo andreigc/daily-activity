@@ -22,14 +22,14 @@
 <script src="js/cryptojs/md5.js"></script>
 </head>
 
-
 <body>
-	
-	<div class="row">
+	<div class="row" ng-controller="MainController">
 		<div class="col-lg-6">
 			<div>
 				<h3>Daily Agenda</h3>
-				<a href="#/logout">logout</a>
+				<div ng-if="isLoggedIn()">
+					<a href="#/logout">logout</a>
+				</div>
 				<hr/>
 			</div>
 		</div>

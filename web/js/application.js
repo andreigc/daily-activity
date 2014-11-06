@@ -1,6 +1,14 @@
 var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'dailyAppFilters', 'dailyAppDirectives','dailyAppServices','ngRoute']);
 
 
+dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
+	
+	$scope.isLoggedIn = function(){
+		return Authentication.isLogged();
+	}
+	
+}])
+
 dailyAgendaApp.run(function ($rootScope, $location,Authentication) {
 
 	
