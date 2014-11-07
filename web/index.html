@@ -28,7 +28,8 @@
 			<div>
 				<h3>Daily Agenda</h3>
 				<div ng-if="isLoggedIn()">
-					<a href="#/logout">logout</a>
+					<a href="#/" ng-click="logout($event)">logout</a>
+					
 				</div>
 				<hr/>
 			</div>

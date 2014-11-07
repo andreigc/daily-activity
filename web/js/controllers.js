@@ -7,13 +7,6 @@ dailyAppControllers.controller('RegisterController',['$scope','$http','$location
 	
 }])
 
-dailyAppControllers.controller("LogoutController",['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
-	$http.post('rest/auth/logout',{},{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
-		Authentication.setSessionId("");
-		$location.path("/login");
-	})
-}])
-
 dailyAppControllers.controller('LoginController',['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
 	
 	

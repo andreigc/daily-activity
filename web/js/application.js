@@ -7,12 +7,22 @@ dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authen
 		return Authentication.isLogged();
 	}
 	
+	$scope.test = function(){
+		console.log("a");
+	}
+	
+	$scope.logout = function(event){
+		event.preventDefault();	
+		$http.post('rest/auth/logout',{},{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
+			Authentication.setSessionId("");
+			$location.path("/login");
+		})
+	}
+	
 }])
 
 dailyAgendaApp.run(function ($rootScope, $location,Authentication) {
 
-	
-	
 $rootScope.$on('$routeChangeStart', function (event, next, current) {
 	  if(next){
 		  if (next.$$route.originalPath !== '/login' && next.$$route.originalPath !== '/logout' && next.$$route.originalPath !== '/register' && !Authentication.isLogged()) {
@@ -31,9 +41,6 @@ dailyAgendaApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/login',{
 		templateUrl: 'partials/login.html',
 		controller: 'LoginController'
-	}).when('/logout',{
-		templateUrl: 'partials/logout.html',
-		controller: 'LogoutController'
 	}).when('/register',{
 		templateUrl: 'partials/register.html',
 		controller: 'RegisterController'
