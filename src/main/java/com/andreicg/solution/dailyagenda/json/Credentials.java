@@ -2,14 +2,14 @@ package com.andreicg.solution.dailyagenda.json;
 
 public class Credentials {
 
-    private String userName;
+    private String usenname;
     private String encodedPassword;
     
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return usenname;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.usenname = username;
     }
     public String getEncodedPassword() {
         return encodedPassword;

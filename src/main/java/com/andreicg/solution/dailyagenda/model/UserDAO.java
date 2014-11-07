@@ -18,12 +18,33 @@ public class UserDAO {
 	return conn;
     }
     
+    
+    public static void addNewUser(User user){
+	String insertQuery = "INSERT INTO public.\"User\" ";
+	insertQuery += "(\"Username\", \"Password\", \"Name\",\"Surname\", \"Email\") VALUES(?,?,?,?,?)";
+	
+	try {
+	    Connection connection = getConnection();
+	    PreparedStatement prepStatement = connection.prepareStatement(insertQuery);
+	    
+	    prepStatement.setString(1, user.getUsername());
+	    prepStatement.setString(2, user.getPassword());
+	    prepStatement.setString(3, user.getName());
+	    prepStatement.setString(4, user.getSurname());
+	    prepStatement.setString(5, user.getEmail());
+	    prepStatement.executeUpdate();
+	    
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+    }
+    
     public static User checkCredentials(Credentials credentials){
 	String queryString = "SELECT * from public.\"User\" WHERE \"Username\" = ?";
 	try {
 	    Connection connection = getConnection();
 	    PreparedStatement prepStatement = connection.prepareStatement(queryString);
-	    prepStatement.setString(1, credentials.getUserName());
+	    prepStatement.setString(1, credentials.getUsername());
 
 	    ResultSet rs = prepStatement.executeQuery();
 	    if(rs.next()){
@@ -31,7 +52,7 @@ public class UserDAO {
 		if(encodedPassword.equals(credentials.getEncodedPassword())){
 		    User user = new User();
 		   // usr.setPassword(encodedPassword);
-		    user.setUserName(credentials.getUserName());
+		    user.setUsername(credentials.getUsername());
 		    user.setID(rs.getInt("ID"));
 		    return user;
 		}

@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2014-11-07 11:30:30
+-- Started on 2014-11-07 13:36:00
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -143,8 +143,8 @@ CREATE TABLE "User" (
     "ID" integer NOT NULL,
     "Username" character(12) NOT NULL,
     "Password" character(32),
-    "Name" character varying(20),
-    "Surname" character varying(20),
+    "Name" character varying(20) NOT NULL,
+    "Surname" character varying(20) NOT NULL,
     "Email" character varying(30) NOT NULL
 );
 
@@ -415,7 +415,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-11-07 11:30:31
+-- Completed on 2014-11-07 13:36:01
 
 --
 -- PostgreSQL database dump complete
