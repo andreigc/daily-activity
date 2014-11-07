@@ -7,10 +7,6 @@ dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authen
 		return Authentication.isLogged();
 	}
 	
-	$scope.test = function(){
-		console.log("a");
-	}
-	
 	$scope.logout = function(event){
 		event.preventDefault();	
 		$http.post('rest/auth/logout',{},{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
