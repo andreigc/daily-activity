@@ -5,6 +5,14 @@ dailyAppControllers.controller('RegisterController',['$scope','$http','$location
 	
 	$scope.newUser={};
 	
+	$scope.submit = function(){
+		var hash = CryptoJS.MD5($scope.password);
+		$scope.newUser.password = hash.toString(CryptoJS.enc.Hex)
+		$http.put('rest/user/register',$scope.newUser).success(function(data){
+			$location.path("/login");
+		});
+	};
+	
 }])
 
 dailyAppControllers.controller('LoginController',['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
@@ -20,10 +28,12 @@ dailyAppControllers.controller('LoginController',['$scope','$http','$location','
 	
 	$scope.submitCredentials = function(){
 		$http.post('rest/auth/login',$scope.credentials).success(function(data){
-			Authentication.setSessionId(data.sessionId);
-			Authentication.setUserId(data.user.id);
-			if(Authentication.isLogged()){
-				$location.path("tasks");
+			if(data.sessionId!=null){
+				Authentication.setSessionId(data.sessionId);
+				Authentication.setUserId(data.user.id);
+				if(Authentication.isLogged()){
+					$location.path("tasks");
+				}
 			}
 		});
 	};

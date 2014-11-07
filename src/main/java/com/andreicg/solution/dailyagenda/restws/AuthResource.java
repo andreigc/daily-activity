@@ -24,15 +24,18 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public LoginResponse login(Credentials loginObject){
 	User user = UserDAO.checkCredentials(loginObject);
-	UserJson userJson = User.userToUserJson(user);
 	LoginResponse response = new LoginResponse();
-	response.setUser(userJson);
-	if(AuthenticationUtil.isAuthenticated(user)){
-	    response.setSessionId(AuthenticationUtil.getSessionId(user));
-	}
 	if(user!=null){
-	    response.setSessionId(AuthenticationUtil.doLogin(user));
+		UserJson userJson = User.userToUserJson(user);
+		response.setUser(userJson);
+		if(AuthenticationUtil.isAuthenticated(user)){
+		    response.setSessionId(AuthenticationUtil.getSessionId(user));
+		}else{
+			response.setSessionId(AuthenticationUtil.doLogin(user));
+		}
 	}
+	
+	
 	return response;
     }
     
