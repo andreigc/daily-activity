@@ -20,7 +20,8 @@ dailyAppControllers.controller('LoginController',['$scope','$http','$location','
 	
 	$scope.submitCredentials = function(){
 		$http.post('rest/auth/login',$scope.credentials).success(function(data){
-			Authentication.setSessionId(data);
+			Authentication.setSessionId(data.sessionId);
+			Authentication.setUserId(data.user.id);
 			if(Authentication.isLogged()){
 				$location.path("tasks");
 			}
@@ -51,7 +52,8 @@ dailyAppControllers.controller('TaskListController', [
 			
 			$scope.loadData = function(){
 				var baseUrl = "rest/protected/tasks/get/multiple";
-				var paramsUrl = "?userId=1&completionType="+$scope.completedFilter.value;
+				var paramsUrl = "?userId="+Authentication.getUserId();
+				paramsUrl+="&completionType="+$scope.completedFilter.value;
 				paramsUrl+="&startDateMillis="+$scope.selectedDate.getTime();
 				$http.get(baseUrl+paramsUrl,{headers: {'sessionId':Authentication.getSessionId()}}).success(
 					function(data) {

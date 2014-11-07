@@ -10,6 +10,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import com.andreicg.solution.dailyagenda.json.Credentials;
+import com.andreicg.solution.dailyagenda.json.LoginResponse;
+import com.andreicg.solution.dailyagenda.json.UserJson;
 import com.andreicg.solution.dailyagenda.model.User;
 import com.andreicg.solution.dailyagenda.model.UserDAO;
 import com.andreicg.solution.dailyagenda.util.AuthenticationUtil;
@@ -20,16 +22,18 @@ public class AuthResource {
     @Path("/login")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String login(Credentials loginObject){
+    public LoginResponse login(Credentials loginObject){
 	User user = UserDAO.checkCredentials(loginObject);
+	UserJson userJson = User.userToUserJson(user);
+	LoginResponse response = new LoginResponse();
+	response.setUser(userJson);
 	if(AuthenticationUtil.isAuthenticated(user)){
-	    return AuthenticationUtil.getSessionId(user);
+	    response.setSessionId(AuthenticationUtil.getSessionId(user));
 	}
 	if(user!=null){
-	    String sessionId = AuthenticationUtil.doLogin(user);
-	    return sessionId;
+	    response.setSessionId(AuthenticationUtil.doLogin(user));
 	}
-	return null;
+	return response;
     }
     
     @Path("/logout")

@@ -9,5 +9,15 @@ myModule.factory('Authentication',['$window',function($window) {
   this.setSessionId = function(sId){
 	  $window.sessionStorage.sessionId = sId;
   }
+  this.setUserId = function(userId){
+	  $window.sessionStorage.userId = userId;
+  }
+  this.getUserId = function(){
+	  return $window.sessionStorage.userId;
+  }
+  this.clearSession = function(){
+	  $window.sessionStorage.sessionId = ""
+	  $window.sessionStorage.userId = -1;
+  }
   return this;
 }]);

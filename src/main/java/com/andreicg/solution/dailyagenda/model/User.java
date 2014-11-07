@@ -2,6 +2,8 @@ package com.andreicg.solution.dailyagenda.model;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.andreicg.solution.dailyagenda.json.UserJson;
+
 public class User {
 
     private int ID;
@@ -116,6 +118,17 @@ public class User {
     @Override
     public String toString() {
 	return ToStringBuilder.reflectionToString(this);
+    }
+
+    public static UserJson userToUserJson(User user) {
+	UserJson userJson = new UserJson();	
+	userJson.setID(user.getID());
+   	userJson.setEmail(user.getEmail());
+   	userJson.setUsername(user.getUsername());
+   	userJson.setPassword(user.getPassword());
+   	userJson.setName(user.getName());
+   	userJson.setSurname(user.getSurname());
+   	return userJson;
     }
 
 }

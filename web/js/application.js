@@ -4,13 +4,14 @@ var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'd
 dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
 	
 	$scope.isLoggedIn = function(){
+		var userId = Authentication.getUserId();
 		return Authentication.isLogged();
 	}
 	
 	$scope.logout = function(event){
 		event.preventDefault();	
 		$http.post('rest/auth/logout',{},{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
-			Authentication.setSessionId("");
+			Authentication.clearSession();
 			$location.path("/login");
 		})
 	}
