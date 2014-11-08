@@ -31,7 +31,9 @@
 				<div ng-if="isLoggedIn()">
 					<a href="#/" ng-click="logout($event)">logout</a>
 				</div>
-
+				<div ng-if="!isLoggedIn()">
+					<a href="#/login">login</a>
+				</div>
 			</div>
 		</div>
 	</div>
