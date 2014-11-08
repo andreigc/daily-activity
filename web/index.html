@@ -24,16 +24,36 @@
 
 <body>
 	<div class="row" ng-controller="MainController">
-		<div class="col-lg-6">
+		<div class="col-lg-10">
 			<div>
 				<h3>Daily Agenda</h3>
+				<p>Version: 0.0.7 BETA</p>
 				<div ng-if="isLoggedIn()">
 					<a href="#/" ng-click="logout($event)">logout</a>
 				</div>
-				<hr/>
+
 			</div>
 		</div>
 	</div>
+	<hr />
+	
+	<div class="alert alert-success alert-dismissible alert-success hidden" role="alert">
+ 		<button type="button" class="close" data-dismiss="alert">
+ 			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+ 		</button>
+ 		<strong id="msg">Placeholder message<!--  Task successfully deleted--></strong>
+	</div>
+	
+	
 	<div ng-view></div>
+	<footer>
+		<hr />
+		<p>Created by: Andrei Cristian Geacar</p>
+		<p>
+			Contact information: <a href="mailto:andrei.geacar@gmail.com">
+				andrei.geacar@gmail.com</a>.
+		</p>
+	</footer>
 </body>
+
 </html>

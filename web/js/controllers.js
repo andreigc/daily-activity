@@ -9,6 +9,11 @@ dailyAppControllers.controller('RegisterController',['$scope','$http','$location
 		var hash = CryptoJS.MD5($scope.password);
 		$scope.newUser.password = hash.toString(CryptoJS.enc.Hex)
 		$http.put('rest/user/register',$scope.newUser).success(function(data){
+			
+			angular.element(document.querySelector('.alert-success')).removeClass('hidden');
+			angular.element(document.querySelector('#msg')).html("User registered successfully");
+			setTimeout(function(){angular.element(document.querySelector('.alert-success')).addClass('hidden');},2000);
+			
 			$location.path("/login");
 		});
 	};
@@ -98,9 +103,9 @@ dailyAppControllers.controller('TaskListController', [
 				$('#deleteModal').modal('hide');
 				$http['delete']('rest/protected/tasks/delete?taskId='+$scope.toDeleteTask.id,{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
 					$scope.loadData();
-					angular.element(document.querySelector('.alert-deleted-success')).removeClass('hidden');
-					
-					$timeout(function(){angular.element(document.querySelector('.alert-deleted-success')).addClass('hidden');},2000);
+					angular.element(document.querySelector('#msg')).html("Tasks successfully deleted");
+					angular.element(document.querySelector('.alert-success')).removeClass('hidden');
+					setTimeout(function(){angular.element(document.querySelector('.alert-success')).addClass('hidden');},2000);
 					
 				})
 			}
@@ -169,7 +174,12 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 				
 				$http.put("rest/protected/tasks/create",$scope.task,{headers: {'sessionId':Authentication.getSessionId()}}).
 				  success(function(data, status, headers, config) {
+					  
+					  angular.element(document.querySelector('#msg')).html("Tasks successfully created");
+					  angular.element(document.querySelector('.alert-success')).removeClass('hidden');
+					  setTimeout(function(){angular.element(document.querySelector('.alert-success')).addClass('hidden');},2000);
 					  $location.path('/tasks');
+					  
 				  }).error(function(data, status, headers, config) {
 					    alert("Creating new task failed");
 			      });
@@ -211,6 +221,9 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 	$scope.submit = function(){
 		$http.post('rest/protected/tasks/update',$scope.task,{headers: {'sessionId':Authentication.getSessionId()}}).success(function(data){
 			$location.path("tasks");
+			angular.element(document.querySelector('.alert-success')).removeClass('hidden');
+			angular.element(document.querySelector('#msg')).html("Tasks successfully updated");
+			setTimeout(function(){angular.element(document.querySelector('.alert-success')).addClass('hidden');},2000);
 		})
 	}
 	
