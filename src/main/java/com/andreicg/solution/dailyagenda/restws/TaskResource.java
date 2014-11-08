@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.andreicg.solution.dailyagenda.enums.CompletionType;
 import com.andreicg.solution.dailyagenda.json.CategoryJson;
 import com.andreicg.solution.dailyagenda.json.Response;
 import com.andreicg.solution.dailyagenda.json.TaskJson;
@@ -28,7 +29,6 @@ import com.andreicg.solution.dailyagenda.model.RecurrenceDAO;
 import com.andreicg.solution.dailyagenda.model.Task;
 import com.andreicg.solution.dailyagenda.model.TaskDAO;
 import com.andreicg.solution.dailyagenda.util.AuthenticationUtil;
-import com.andreigc.solution.dailyagenda.enums.CompletionType;
 
 @Path("/protected/tasks")
 public class TaskResource {

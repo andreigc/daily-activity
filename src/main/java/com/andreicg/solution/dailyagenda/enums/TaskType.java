@@ -1,4 +1,4 @@
-package com.andreigc.solution.dailyagenda.enums;
+package com.andreicg.solution.dailyagenda.enums;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.andreigc.solution.dailyagenda.enums.CompletionType;
-import com.andreigc.solution.dailyagenda.enums.TaskType;
+import com.andreicg.solution.dailyagenda.enums.CompletionType;
+import com.andreicg.solution.dailyagenda.enums.TaskType;
 
 public class TaskDAO {
     
