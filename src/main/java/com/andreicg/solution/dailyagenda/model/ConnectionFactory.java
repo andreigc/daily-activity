@@ -6,11 +6,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ConnectionFactory {
 	private String driverName = "org.postgresql.Driver";
-	//private String url = "jdbc:postgresql://localhost/dailyagenda";
-	//private String user = "postgres";
-	//private String password = "postgres";
+	private String localDbUrl = "jdbc:postgresql://localhost/dailyagenda";
+	private String localDbUser = "postgres";
+	private String localDbPassword = "postgres";
 
 	private static ConnectionFactory connectionFactory;
 
@@ -31,19 +33,24 @@ public class ConnectionFactory {
 
 	public Connection getConnection() throws SQLException {
 
+		
+		Connection result = null;
 		URI dbUri = null;
-		try {
-			dbUri = new URI(System.getenv("DATABASE_URL"));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		String databaseUrl = System.getenv("DATABASE_URL");
+		if(!StringUtils.isBlank(databaseUrl)){
+			try {
+				dbUri = new URI(databaseUrl);
+				String username = dbUri.getUserInfo().split(":")[0];
+				String password = dbUri.getUserInfo().split(":")[1];
+				String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+						+ dbUri.getPort() + dbUri.getPath();
+				result = DriverManager.getConnection(dbUrl, username, password);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+		}else{
+			result = DriverManager.getConnection(localDbUrl,localDbUser,localDbPassword);
 		}
-
-		String username = dbUri.getUserInfo().split(":")[0];
-		String password = dbUri.getUserInfo().split(":")[1];
-		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
-				+ dbUri.getPort() + dbUri.getPath();
-
-		return DriverManager.getConnection(dbUrl, username, password);
+		return result;
 	}
-
 }

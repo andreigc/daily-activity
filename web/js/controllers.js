@@ -39,6 +39,10 @@ dailyAppControllers.controller('LoginController',['$scope','$http','$location','
 				if(Authentication.isLogged()){
 					$location.path("tasks");
 				}
+			}else{
+				angular.element(document.querySelector('.alert-danger')).removeClass('hidden');
+				angular.element(document.querySelector('#msg-fail')).html("Incorrect username and/or password");
+				setTimeout(function(){angular.element(document.querySelector('.alert-danger')).addClass('hidden');},2000);
 			}
 		});
 	};
