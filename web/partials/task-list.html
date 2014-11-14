@@ -14,13 +14,8 @@
 			<input class="new-task-align" type="date" ng-change="loadData()" ng-model="selectedDate" style="height:20px;width:130px;">
 	    </div>
 </div>
-<hr/>
-		<div class="alert alert-success alert-dismissible alert-deleted-success hidden" role="alert">
-	  		<button type="button" class="close" data-dismiss="alert">
-	  			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-	  		</button>
-	  		<strong>Task successfully deleted</strong>
-	</div>
+<hr style="width:800px">
+
 
 <!-- Delete Item Modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -46,7 +41,7 @@
 	
 	
 
-	<div class="my-category" ng-repeat="category in categories" ng-hover-category id="{{category.id}}">
+	<div class="my-category" ng-repeat="category in categories" ng-hover-category id="{{category.id}}" style="width:800px">
 		<div class="row">
 			<div class="col-lg-4">
 				<span>{{category.name}}</span>

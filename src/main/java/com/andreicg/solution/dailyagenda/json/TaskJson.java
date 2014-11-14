@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.andreicg.solution.dailyagenda.enums.TaskType;
 import com.andreicg.solution.dailyagenda.model.Category;
 import com.andreicg.solution.dailyagenda.model.Task;
-import com.andreigc.solution.dailyagenda.enums.TaskType;
 
 public class TaskJson {
 
