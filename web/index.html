@@ -24,18 +24,18 @@
 
 <body>
 	<div class="row" ng-controller="MainController">
-		<div class="col-lg-10">
-			<div>
+		<div class="col-lg-4">
 				<h3>Daily Activity</h3>
 				<p>Version: 0.0.7 BETA</p>
-				<div ng-if="isLoggedIn()">
+				<span ng-if="isLoggedIn()">
+					<a href="#/tasks">home</a>
 					<a href="#/" ng-click="logout($event)">logout</a>
-				</div>
-				<div ng-if="!isLoggedIn()">
+				</span>
+				<span ng-if="!isLoggedIn()">
+					<a href="#/">home</a>
 					<a href="#/login">login</a>
-				</div>
+				</span>
 			</div>
-		</div>
 	</div>
 	<hr />
 	
