@@ -165,6 +165,10 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 			      });
 				
 		      };
+		      
+		   $scope.cancel = function(){
+			   $location.path("/tasks");
+		   }
 
 		} ]);
 
@@ -203,5 +207,10 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 			$location.path("tasks");
 		})
 	}
+	
+	$scope.cancel = function(){
+		$location.path("/tasks");
+	}
+
 	
 }])
