@@ -16,8 +16,18 @@ myModule.factory('Authentication',['$window',function($window) {
 	  return $window.sessionStorage.userId;
   }
   this.clearSession = function(){
-	  $window.sessionStorage.sessionId = ""
+	  $window.sessionStorage.sessionId = "";
+	  $window.sessionStorage.username = "";
 	  $window.sessionStorage.userId = -1;
   }
+  
+  this.setUsername = function(username){
+	  $window.sessionStorage.username = username;
+  }
+  
+  this.getUsername = function(){
+	  return $window.sessionStorage.username;
+  }
+  
   return this;
 }]);

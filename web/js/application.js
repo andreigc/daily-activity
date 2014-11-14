@@ -3,6 +3,11 @@ var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'd
 
 dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
 	
+	
+	$scope.currentUser = function(){
+		return Authentication.getUsername();
+	}
+	
 	$scope.isLoggedIn = function(){
 		var userId = Authentication.getUserId();
 		return Authentication.isLogged();

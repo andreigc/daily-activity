@@ -36,6 +36,7 @@ dailyAppControllers.controller('LoginController',['$scope','$http','$location','
 			if(data.sessionId!=null){
 				Authentication.setSessionId(data.sessionId);
 				Authentication.setUserId(data.user.id);
+				Authentication.setUsername(data.user.username);
 				if(Authentication.isLogged()){
 					$location.path("tasks");
 				}
