@@ -26,7 +26,7 @@
 	<div class="row" ng-controller="MainController">
 		<div class="col-lg-4">
 				<h3>Daily Activity</h3>
-				<p>Version: 0.0.7 BETA</p>
+				<p>Version: 0.0.8 BETA</p>
 				{{currentUser()}}
 				<span ng-if="isLoggedIn()">
 					<a href="#/tasks">home</a>
@@ -41,22 +41,28 @@
 	</div>
 	<hr />
 	
-	<div class="alert alert-success alert-dismissible hidden" role="alert">
- 		<button type="button" class="close" data-dismiss="alert">
- 			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
- 		</button>
- 		<strong id="msg">Placeholder message</strong>
-	</div>
-	
-	<div class="alert alert-danger alert-dismissible hidden" role="alert">
- 		<button type="button" class="close" data-dismiss="alert">
- 			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
- 		</button>
- 		<strong id="msg-fail">Placeholder message</strong>
+	<div style="height:70px">
+		<div class="alert alert-success alert-dismissible hidden" role="alert">
+	 		<button type="button" class="close" data-dismiss="alert">
+	 			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	 		</button>
+	 		<strong id="msg">Placeholder message</strong>
+		</div>
+		
+		<div class="alert alert-danger alert-dismissible hidden" role="alert">
+	 		<button type="button" class="close" data-dismiss="alert">
+	 			<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	 		</button>
+	 		<strong id="msg-fail">Placeholder message</strong>
+		</div>
 	</div>
 	
 	
 	<div ng-view></div>
+	
+	<div style="height:60px">
+	</div>
+	
 	<footer>
 		<hr />
 		<p>Created by: Andrei Cristian Geacar</p>
