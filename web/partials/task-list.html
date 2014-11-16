@@ -45,7 +45,7 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<span>{{category.name}}</span>
-				<span class="glyphicon glyphicon-plus" ng-if="completedFilter.value!=1"  ng-click="openCreateNewTask(category.id)" 
+				<span title="Add New Task" class="glyphicon glyphicon-plus" ng-if="completedFilter.value!=1"  ng-click="openCreateNewTask(category.id)" 
 				style="position: absolute;left: 110px;padding:3px;border:1px dashed #ccc"></span>
 				
 			</div>
@@ -83,9 +83,9 @@
 					</div>
 				</div>
 				<div class="col-lg-2 hidden delete-icon-task-{{task.id}}" >
-						<span class="glyphicon glyphicon-edit" ng-click="openEditTask(task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
-						<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(task)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
-						<span class="glyphicon glyphicon-plus" ng-if="task.completionGrade<101 && task.taskType==2" ng-click="openCreateNewTask(category.id,task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span title="Edit Task" class="glyphicon glyphicon-edit" ng-click="openEditTask(task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span title="Delete Task" class="glyphicon glyphicon-trash" ng-click="showDeleteModal(task)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+						<span title="Add New Sub-Task" class="glyphicon glyphicon-plus" ng-if="task.completionGrade<101 && task.taskType==2" ng-click="openCreateNewTask(category.id,task.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
 						
 				</div>
 			</div>
@@ -118,8 +118,8 @@
 							</div>
 						</div>
 							<div class="col-lg-2 hidden delete-icon-subtask-{{subtask.id}}" >
-								<span class="glyphicon glyphicon-edit" ng-click="openEditTask(subtask.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
-								<span class="glyphicon glyphicon-trash" ng-click="showDeleteModal(subtask)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+								<span title="Edit Sub-Task" class="glyphicon glyphicon-edit" ng-click="openEditTask(subtask.id)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
+								<span title="Delete Sub-Task" class="glyphicon glyphicon-trash" ng-click="showDeleteModal(subtask)" style="margin-left:10px;float:left;padding:3px;border:1px dashed #ccc"></span>
 							</div>
 					</div>
 				</div>

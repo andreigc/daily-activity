@@ -57,7 +57,9 @@
 		</div>
 	</div>
 	
-	
+	<div class="row" ng-controller="MainController">
+   		<img ng-if="isMainPage()" src="img/pencil.png"/>
+   	</div>
 	<div ng-view></div>
 	
 	<div style="height:60px">
