@@ -1429,8 +1429,12 @@ pre code {
 }
 
 
-.new-task-align{
-	width:170px;
+.input-form-align{
+	width:250px;
+}
+
+.input-form-textarea{
+	height:100px;
 }
 
 .task-list-filter-align{

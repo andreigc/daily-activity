@@ -11,10 +11,10 @@
 	    </div>
 	    <div class="col-lg-2"> 
 			<p class="task-list-filter-align">On Date</p>
-			<input class="new-task-align" type="date" ng-change="loadData()" ng-model="selectedDate" style="height:20px;width:130px;">
+			<input class="input-form-align" type="date" ng-change="loadData()" ng-model="selectedDate" style="height:20px;width:130px;">
 	    </div>
 </div>
-<hr style="width:800px">
+<hr style="width:1000px">
 
 
 <!-- Delete Item Modal -->
@@ -41,7 +41,7 @@
 	
 	
 
-	<div class="my-category" ng-repeat="category in categories" ng-hover-category id="{{category.id}}" style="width:800px">
+	<div class="my-category" ng-repeat="category in categories" ng-hover-category id="{{category.id}}" style="width:1000px">
 		<div class="row">
 			<div class="col-lg-4">
 				<span>{{category.name}}</span>
@@ -73,8 +73,8 @@
 				<div class="col-lg-2">
 					<div class="progress">
 						<div class="progress-bar progress-bar-success" role="progressbar"
-							aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-							style="width: {{task.completionGrade -1}}px">
+							aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+							style="width: {{task.completionGrade -1}}%">
 							<span class="sr-only">{{task.completionGrade - 1}}%
 								Complete
 							</span>
@@ -109,7 +109,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-success" role="progressbar"
 									aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-									style="width: {{subtask.completionGrade- 1}}px">
+									style="width: {{subtask.completionGrade- 1}}%">
 									<span class="sr-only">{{subtask.completionGrade - 1}}%
 										Complete
 									</span>

@@ -3,7 +3,7 @@
 	<div class="row new-task-row">
 		<div class="col-lg-1">Priority</div>
 		<div class="col-lg-2">
-			<select class="new-task-align" ng-model="priority" ng-change="update()" ng-options="priority.name for priority in priorities">
+			<select class="input-form-align" ng-model="priority" ng-change="update()" ng-options="priority.name for priority in priorities">
 			</select>
 		</div>	
 	</div>
@@ -12,7 +12,7 @@
 	<div class="row new-task-row">
 		<div class="col-lg-1">Task Summary  </div>
 		<div class="col-lg-2">
-			<textarea class="new-task-align" name="task.statusComment"  ng-model="task.statusComment" >
+			<textarea class="input-form-align input-form-textarea" name="task.statusComment"  ng-model="task.statusComment" >
 			</textarea>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 	<div class="row new-task-row">
 		<div class="col-lg-1">Percent Completed</div>
 		<div class="col-lg-2"> 
-			<input class="new-task-align" type="number" ng-model="percentCompleted" ng-change="update()" min="0" max="100">
+			<input class="input-form-align" type="number" ng-model="percentCompleted" ng-change="update()" min="0" max="100">
 		</div>
 	</div>
 	

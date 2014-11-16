@@ -8,8 +8,8 @@
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Username</div>
-		<div class="col-lg-2">
-			<input class="new-task-align" name="username" type="text" ng-model="newUser.username" required>
+		<div class="col-lg-3">
+			<input class="input-form-align" name="username" type="text" ng-model="newUser.username" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.username.$error.required">
@@ -20,8 +20,8 @@
 
 	<div class="row new-task-row">
 		<div class="col-lg-1">Password</div>
-		<div class="col-lg-2">
-			<input class="new-task-align" name="password" type="password" ng-model="password" equals="{{passwordRetype}}" required>
+		<div class="col-lg-3">
+			<input class="input-form-align" name="password" type="password" ng-model="password" equals="{{passwordRetype}}" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.password.$error.required">
@@ -32,8 +32,8 @@
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Retype Password</div>
-		<div class="col-lg-2">
-			<input class="new-task-align" name="passwordRetype" type="password" ng-model="passwordRetype" equals="{{password}}" required>
+		<div class="col-lg-3">
+			<input class="input-form-align" name="passwordRetype" type="password" ng-model="passwordRetype" equals="{{password}}" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.passwordRetype.$error.required">
@@ -47,8 +47,8 @@
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Email</div>
-		<div class="col-lg-2">
-			<input name="email" class="new-task-align" type="text" ng-model="newUser.email" required>
+		<div class="col-lg-3">
+			<input name="email" class="input-form-align" type="text" ng-model="newUser.email" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.email.$error.required">
@@ -59,8 +59,8 @@
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Name</div>
-		<div class="col-lg-2">
-			<input name="name" class="new-task-align" type="text" ng-model="newUser.name" required>
+		<div class="col-lg-3">
+			<input name="name" class="input-form-align" type="text" ng-model="newUser.name" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.name.$error.required">
@@ -71,8 +71,8 @@
 	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Surname</div>
-		<div class="col-lg-2">
-			<input class="new-task-align" name="surname" type="text" ng-model="newUser.surname" required>
+		<div class="col-lg-3">
+			<input class="input-form-align" name="surname" type="text" ng-model="newUser.surname" required>
 		</div>
 		<div class="col-lg-2">
 			<div ng-show="registerForm.surname.$error.required">
