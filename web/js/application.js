@@ -14,7 +14,7 @@ dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authen
 	}
 	
 	$scope.isMainPage = function(){
-		return $location.path() == "/";
+		return $location.path() == "/" || $location.path() == "";
 	}
 	
 	$scope.logout = function(event){
