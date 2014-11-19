@@ -21,7 +21,9 @@
 		
 	<div class="row new-task-row">
 		<div class="col-lg-1">Task Description  </div>
-		<div class="col-lg-2"><input class="input-form-align" type="text" name="taskDescription"  ng-model="task.description" required>
+		<div class="col-lg-2">
+		   <textarea class="input-form-textarea"  name="taskDescription"  ng-model="task.description" required>
+		   </textarea>
 		   <span class="error" ng-show="newTaskForm.taskDescription.$error.required">
 			   Required!
 		   </span>

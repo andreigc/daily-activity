@@ -1428,13 +1428,18 @@ pre code {
 	margin-top:10px;
 }
 
+.display-text-break-word{
+	word-break: break-all;
+}
 
 .input-form-align{
-	width:250px;
+	width:150px;
 }
 
 .input-form-textarea{
 	height:100px;
+	width:450px;
+	resize: none;
 }
 
 .task-list-filter-align{
