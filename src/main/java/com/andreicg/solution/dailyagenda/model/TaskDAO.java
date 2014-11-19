@@ -95,12 +95,10 @@ public class TaskDAO {
 	
 	String queryString = "SELECT * from public.\"Task\" INNER JOIN public.\"Recurrence\" ON public.\"Task\".\"ID\" = public.\"Recurrence\".\"TaskID\" WHERE \"UserID\" = ?";
 	if (completionType == CompletionType.COMPLETED) {
-	    queryString += " AND  \"CompletionGrade\"="+Task.COMPLETED_VALUE ;
+	    queryString += " AND  \"CompletionGrade\"="+Task.COMPLETED_VALUE + " OR \"ID\" in (SELECT \"ParentID\" from public.\"Task\" WHERE \"CompletionGrade\"=" + Task.COMPLETED_VALUE + ")";
 	} else if (completionType == CompletionType.UNFINISHED) {
-	    queryString += " AND ( \"CompletionGrade\"<"+Task.COMPLETED_VALUE +" OR \"TaskType\"="+TaskType.SUBTASK.getOrdinal()+")";
+	    queryString += " AND  \"CompletionGrade\"<"+Task.COMPLETED_VALUE;
 	}
-	
-	
 	
 	if(categoryId>0){
 	    queryString += " AND \"CategoryID\"= ? ";
