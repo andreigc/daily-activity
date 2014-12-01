@@ -226,6 +226,9 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 	},{
 		name: 'Container',
 		value: 2
+	},{
+		name: 'Sub-Task',
+		value: 3
 	}]
 	
 	var baseUrl = "rest/protected/tasks/get/single";
