@@ -1,5 +1,20 @@
 <form name="editTaskForm" ng-submit="submit()">
-		
+	
+	<div class="row new-task-row">
+		<div class="col-lg-1">Description</div>
+		<div class="col-lg-2">{{task.description}}</div>
+	</div>
+	
+	<div class="row new-task-row">
+		<div class="col-lg-1">Category</div>
+		<div class="col-lg-2">{{getCategoryName(task.categoryId)}}</div>
+	</div>
+	
+	<div class="row new-task-row">
+		<div class="col-lg-1">Type</div>
+		<div class="col-lg-2">{{getTaskTypeName(task.taskType)}}</div>
+	</div>
+	
 	<div class="row new-task-row">
 		<div class="col-lg-1">Priority</div>
 		<div class="col-lg-2">

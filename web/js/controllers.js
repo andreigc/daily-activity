@@ -160,6 +160,7 @@ dailyAppControllers.controller('TaskNewController', [ '$scope', '$routeParams',
 				name: 'Container',
 				value: 2
 			}]
+			
 			if (!$routeParams.parentId) {
 				$scope.taskType = $scope.taskTypes[0];
 				$scope.task.taskType = $scope.taskType.value;
@@ -211,6 +212,22 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 		value : 3
 	} ];
 	
+	$scope.categories = [{
+		name : 'Work',
+		value: 1
+	},{
+		name: 'Personal',
+		value: 2
+	}]
+	
+	$scope.taskTypes = [{
+		name : 'Standalone',
+		value: 1
+	},{
+		name: 'Container',
+		value: 2
+	}]
+	
 	var baseUrl = "rest/protected/tasks/get/single";
 	var paramsUrl = "?taskId="+$routeParams.taskId;
 	$http.get(baseUrl+paramsUrl,{headers: {'sessionId':Authentication.getSessionId()}}).success(
@@ -240,5 +257,22 @@ dailyAppControllers.controller('TaskEditController',['$scope','$routeParams','$h
 		$location.path("/tasks");
 	}
 
+	$scope.getCategoryName = function(value){
+		for(i=0;i<$scope.categories.length;i++){
+			var type = $scope.categories[i];
+			if(type.value  === value){
+				return type.name;
+			}
+		}
+	}
+	
+	$scope.getTaskTypeName = function(value){
+		for(i=0;i<$scope.taskTypes.length;i++){
+			var type = $scope.taskTypes[i];
+			if(type.value  === value){
+				return type.name;
+			}
+		}
+	}
 	
 }])
