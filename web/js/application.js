@@ -3,6 +3,7 @@ var dailyAgendaApp = angular.module('dailyAgendaApp', ['dailyAppControllers', 'd
 
 dailyAgendaApp.controller("MainController",['$scope','$http','$location','Authentication',function($scope,$http,$location,Authentication){
 	
+	$scope.currentDate = new Date();
 	
 	$scope.currentUser = function(){
 		return Authentication.getUsername();

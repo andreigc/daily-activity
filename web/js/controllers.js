@@ -68,13 +68,14 @@ dailyAppControllers.controller('TaskListController', [
 			} ];
 			$scope.completedFilter = $scope.completedTypes[2];
 			
-			$scope.selectedDate = new Date();
+			//$scope.selectedDate = new Date();
+			
 			
 			$scope.loadData = function(){
 				var baseUrl = "rest/protected/tasks/get/multiple";
 				var paramsUrl = "?userId="+Authentication.getUserId();
 				paramsUrl+="&completionType="+$scope.completedFilter.value;
-				paramsUrl+="&startDateMillis="+$scope.selectedDate.getTime();
+			//	paramsUrl+="&startDateMillis="+$scope.selectedDate.getTime();
 				$http.get(baseUrl+paramsUrl,{headers: {'sessionId':Authentication.getSessionId()}}).success(
 					function(data) {
 						$scope.categories = data;

@@ -1,18 +1,22 @@
 <div class="container-custom">
 
 
-<div class="row">
-		<div class="col-lg-3"> 
-			<p class="task-list-filter-align">Completion</p>
-			<span class="task-list-filter-align"> 
+<div style="width:1000px;height:50px;">
+		
+		<div style="float:right">
+			<p >Completion</p>
+			<span> 
 			   <select ng-model="completedFilter" ng-change="loadData()" ng-options="completedType.name for completedType in completedTypes">
 			   </select>
 		    </span>
-	    </div>
+		</div>
+	   
+	    <!--
 	    <div class="col-lg-3"> 
 			<p class="task-list-filter-align">On Date</p>
 			<input class="input-form-align" type="date" ng-change="loadData()" ng-model="selectedDate" style="height:20px;width:130px;">
 	    </div>
+	    -->
 </div>
 <hr style="width:1000px">
 
